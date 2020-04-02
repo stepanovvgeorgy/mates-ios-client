@@ -13,15 +13,14 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
+    static let iosVersion = (UIDevice.current.systemVersion as NSString).floatValue
     static let storyboard = UIStoryboard(name: "Main", bundle: nil)
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        let iosVersion = (UIDevice.current.systemVersion as NSString).floatValue
-        
-        if iosVersion < 13.0 {
+        if AppDelegate.iosVersion < 13.0 {
             Helper.startApp(window: window)
         }
         

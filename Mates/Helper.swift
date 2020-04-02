@@ -18,13 +18,8 @@ class Helper {
         let isAuth = token != nil && user_id != nil
         
         if isAuth {
-            
             let innerTabBarController = AppDelegate.storyboard.instantiateViewController(withIdentifier: "InnerTabBarController")
-            
             window?.rootViewController = innerTabBarController
-            
-        } else {
-            print("Не авторизирован")
         }
     }
     

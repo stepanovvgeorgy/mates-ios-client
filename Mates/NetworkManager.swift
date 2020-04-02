@@ -72,4 +72,38 @@ class NetworkManager {
                     }
         }
     }
+    
+    static func getUserById(_ id: Int, _ completion: @escaping (_ user: User) -> ()) {
+        guard let url = URL(string: "\(serverUrl)/user/\(id)") else { return }
+        
+        let token = UserDefaults.standard.value(forKey: "token") as! String
+        
+        let headers: [String: String] = [
+            "Content-Type": "application/json",
+            "token": token
+        ]
+        
+        let httpHeaders = HTTPHeaders(headers)
+                
+        AF.request(url, method: .get, headers: httpHeaders).validate().responseJSON { (response) in
+            switch response.result {
+            case .success(let value):
+                let data = JSON(value)
+                
+                let userFromServer = User(first_name: data["first_name"].stringValue,
+                                last_name: data["last_name"].stringValue,
+                                b_date: data["b_date"].stringValue,
+                                gender: data["gender"].intValue,
+                                email: data["email"].stringValue,
+                                phone: data["phone"].stringValue,
+                                password: "")
+                
+                completion(userFromServer)
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+    }
 }
