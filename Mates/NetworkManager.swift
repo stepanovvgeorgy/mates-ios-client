@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class NetworkManager {
     
-    static let serverUrl = "http://127.0.0.1:5000/api"
+    static let serverUrl = "http://192.168.1.5:5000/api"
     
     static let headers: [String: String] = ["Content-Type": "application/json"]
     
@@ -104,6 +104,16 @@ class NetworkManager {
                 print(error)
             }
         }
+    }
+    
+    static func uploadImage(_ image: UIImage, _ completion: @escaping () -> ()) {
+        guard let imageData = image.jpegData(compressionQuality: 0.1) else {return}
         
+        AF.upload(multipartFormData: { (form) in
+            form.append(imageData, withName: "file_data", fileName: "\(Helper.randomString(length: 7)).jpg", mimeType: "image/jpeg")
+        }, to: "\(serverUrl)/images/upload", method: .post).response { result in
+            print(result)
+            completion()
+        }
     }
 }

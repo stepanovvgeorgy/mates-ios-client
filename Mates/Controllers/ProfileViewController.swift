@@ -11,7 +11,6 @@ import UIKit
 class ProfileViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var editBarButton: UIBarButtonItem!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var user: User?
@@ -34,33 +33,6 @@ class ProfileViewController: UIViewController {
             self.tableView.isHidden = false
         }
     }
-    
-    @IBAction func actionEdit(_ sender: UIBarButtonItem) {
-        
-    }
-    
-    @IBAction func actionLogout(_ sender: UIBarButtonItem) {
-        
-        let alert = UIAlertController(title: "Выход", message: "Вы действительно хотите выйти?", preferredStyle: .alert)
-        
-        let okAction = UIAlertAction(title: "Да", style: .default) { (action) in
-
-        }
-        
-        let cancelAction = UIAlertAction(title: "Нет", style: .cancel)
-        
-        alert.addAction(okAction)
-        alert.addAction(cancelAction)
-        
-        present(alert, animated: true) {
-            
-        }
-    }
-    
-    func logout() {
-
-    }
-    
 }
 
 extension ProfileViewController: UITableViewDataSource {

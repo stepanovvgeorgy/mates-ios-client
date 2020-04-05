@@ -17,6 +17,9 @@
 		D3554C202430E42D00444C6E /* Mates.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D3554C1E2430E42D00444C6E /* Mates.xcdatamodeld */; };
 		D3554C222430E43100444C6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3554C212430E43100444C6E /* Assets.xcassets */; };
 		D3554C252430E43100444C6E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3554C232430E43100444C6E /* LaunchScreen.storyboard */; };
+		D3B01EC02439EA3400F1772B /* AdTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B01EBF2439EA3400F1772B /* AdTableViewController.swift */; };
+		D3B01EC32439EE3B00F1772B /* BigImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B01EC12439EE3B00F1772B /* BigImageCollectionViewCell.swift */; };
+		D3B01EC42439EE3B00F1772B /* BigImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3B01EC22439EE3B00F1772B /* BigImageCollectionViewCell.xib */; };
 		D3D86BC8243673EA00DBA3D0 /* AddAdsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D86BC7243673EA00DBA3D0 /* AddAdsTableViewController.swift */; };
 		D3E59997243537CD00D2CF34 /* AdsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E59996243537CD00D2CF34 /* AdsTableViewCell.swift */; };
 		D3E599992435F02B00D2CF34 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E599982435F02B00D2CF34 /* ProfileViewController.swift */; };
@@ -42,6 +45,10 @@
 		D3554C212430E43100444C6E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D3554C242430E43100444C6E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D3554C262430E43100444C6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D3B01EBF2439EA3400F1772B /* AdTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdTableViewController.swift; sourceTree = "<group>"; };
+		D3B01EC12439EE3B00F1772B /* BigImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		D3B01EC22439EE3B00F1772B /* BigImageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BigImageCollectionViewCell.xib; sourceTree = "<group>"; };
+		D3B01EC5243A18A400F1772B /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		D3D86BC7243673EA00DBA3D0 /* AddAdsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAdsTableViewController.swift; sourceTree = "<group>"; };
 		D3E59996243537CD00D2CF34 /* AdsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsTableViewCell.swift; sourceTree = "<group>"; };
 		D3E599982435F02B00D2CF34 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -78,6 +85,7 @@
 		A5F527354E5275685D7F56AA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D3B01EC5243A18A400F1772B /* Photos.framework */,
 				01A6D92B2DBF43C6837B8823 /* Pods_Mates.framework */,
 			);
 			name = Frameworks;
@@ -137,6 +145,7 @@
 				D3FFC9322434D0D4005D5243 /* AdsViewController.swift */,
 				D3E599982435F02B00D2CF34 /* ProfileViewController.swift */,
 				D3D86BC7243673EA00DBA3D0 /* AddAdsTableViewController.swift */,
+				D3B01EBF2439EA3400F1772B /* AdTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -144,6 +153,7 @@
 		D3554C2E2430E4D700444C6E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D3B01EC22439EE3B00F1772B /* BigImageCollectionViewCell.xib */,
 				D3554C1B2430E42D00444C6E /* Main.storyboard */,
 				D3554C232430E43100444C6E /* LaunchScreen.storyboard */,
 			);
@@ -155,6 +165,7 @@
 			children = (
 				D3E59996243537CD00D2CF34 /* AdsTableViewCell.swift */,
 				D30AECAA2438D6CA00DF6DAF /* ImageCollectionViewCell.swift */,
+				D3B01EC12439EE3B00F1772B /* BigImageCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -230,6 +241,7 @@
 				D3554C252430E43100444C6E /* LaunchScreen.storyboard in Resources */,
 				D3554C222430E43100444C6E /* Assets.xcassets in Resources */,
 				D3554C1D2430E42D00444C6E /* Main.storyboard in Resources */,
+				D3B01EC42439EE3B00F1772B /* BigImageCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,6 +296,8 @@
 			files = (
 				D3554C202430E42D00444C6E /* Mates.xcdatamodeld in Sources */,
 				D3554C1A2430E42D00444C6E /* SignInViewController.swift in Sources */,
+				D3B01EC02439EA3400F1772B /* AdTableViewController.swift in Sources */,
+				D3B01EC32439EE3B00F1772B /* BigImageCollectionViewCell.swift in Sources */,
 				D3E887932430E5AF001FFA50 /* NetworkManager.swift in Sources */,
 				D3D86BC8243673EA00DBA3D0 /* AddAdsTableViewController.swift in Sources */,
 				D3E59997243537CD00D2CF34 /* AdsTableViewCell.swift in Sources */,

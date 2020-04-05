@@ -16,6 +16,7 @@ let timeToSubwayList = [
     "25+ минут"
 ]
 
+
 class AddAdsTableViewController: UITableViewController {
     
     @IBOutlet weak var imagesCollectionView: UICollectionView!
@@ -46,7 +47,7 @@ class AddAdsTableViewController: UITableViewController {
     
     let subwayPickerView = UIPickerView()
     let timeToSubwayPickerView = UIPickerView()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -86,6 +87,7 @@ class AddAdsTableViewController: UITableViewController {
         view.addGestureRecognizer(tapGesture)
     }
     
+    
     @objc func hideKeyboard() {
         view.endEditing(true)
     }
@@ -97,7 +99,17 @@ class AddAdsTableViewController: UITableViewController {
     }
     
     @IBAction func actionPublish(_ sender: UIBarButtonItem) {
+        uploadImages()
+    }
         
+    func uploadImages() {
+        if !attachmentImages.isEmpty {
+            for image in attachmentImages {
+                NetworkManager.uploadImage(image) {
+     
+                }
+            }
+        }
     }
     
     @IBAction func actionClose(_ sender: UIBarButtonItem) {
@@ -105,7 +117,11 @@ class AddAdsTableViewController: UITableViewController {
     }
     
     @IBAction func actionAddimages(_ sender: UIButton) {
-        present(imagePicker, animated: true, completion: nil)
+        if attachmentImages.count < 4 {
+            present(imagePicker, animated: true, completion: nil)
+        } else {
+            present(Helper.showInfoAlert(title: "Ошибка", message: "Вы можете прикрепить не более четырех изображений")!, animated: true)
+        }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -129,18 +145,6 @@ class AddAdsTableViewController: UITableViewController {
         return 85
     }
     
-    func convertImageToBase64(_ image: UIImage) -> String {
-        let imageData:NSData = image.jpegData(compressionQuality: 0.4)! as NSData
-        let strBase64 = imageData.base64EncodedString(options: .lineLength64Characters)
-        return strBase64
-    }
-    
-    func convertBase64ToImage(_ str: String) -> UIImage {
-        let dataDecoded : Data = Data(base64Encoded: str, options: .ignoreUnknownCharacters)!
-        let decodedimage = UIImage(data: dataDecoded)
-        return decodedimage!
-    }
-    
 }
 
 extension AddAdsTableViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -154,9 +158,9 @@ extension AddAdsTableViewController: UICollectionViewDelegate, UICollectionViewD
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! ImageCollectionViewCell
         
         cell.layer.cornerRadius = 5
-                
+        
         cell.photoImageView.image = attachmentImages[indexPath.row]
-                
+        
         return cell
         
     }
@@ -173,7 +177,7 @@ extension AddAdsTableViewController: UIPickerViewDataSource, UIPickerViewDelegat
         if pickerView.isEqual(subwayPickerView) {
             return StationsList.all.count
         }
-    
+        
         if pickerView.isEqual(timeToSubwayPickerView) {
             return timeToSubwayList.count
         }
@@ -224,14 +228,7 @@ extension AddAdsTableViewController: UIImagePickerControllerDelegate, UINavigati
         self.tableView.reloadData()
         
         picker.dismiss(animated: true)
-
     }
     
-
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        self.imagesCollectionView.reloadData()
-        self.tableView.reloadData()
-    }
     
 }
