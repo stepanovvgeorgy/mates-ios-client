@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class NetworkManager {
     
-    static let serverUrl = "http://192.168.1.5:5000/api"
+    static let serverUrl = "http://127.0.0.1:5000/api"
     
     static let headers: [String: String] = ["Content-Type": "application/json"]
     
@@ -101,7 +101,7 @@ class NetworkManager {
                 completion(userFromServer)
                 
             case .failure(let error):
-                print(error.localizedDescription)
+                print(error)
             }
         }
         

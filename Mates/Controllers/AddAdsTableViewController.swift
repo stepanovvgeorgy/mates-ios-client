@@ -110,12 +110,20 @@ class AddAdsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
+        if indexPath.section == 0 && indexPath.row == 0 {
+            return 65
+        }
+        
         if attachmentImages.count != 0 && indexPath.section == 2 && indexPath.row == 1 {
             return 110
         }
         
         if attachmentImages.count == 0 && indexPath.section == 2 && indexPath.row == 1 {
             return 0
+        }
+        
+        if indexPath.section == 3 && indexPath.row == 4 {
+            return 65
         }
         
         return 85
@@ -132,6 +140,7 @@ class AddAdsTableViewController: UITableViewController {
         let decodedimage = UIImage(data: dataDecoded)
         return decodedimage!
     }
+    
 }
 
 extension AddAdsTableViewController: UICollectionViewDelegate, UICollectionViewDataSource {
