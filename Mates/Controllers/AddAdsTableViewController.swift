@@ -82,7 +82,7 @@ class AddAdsTableViewController: UITableViewController {
         genderMateSegmentedControl.tintColor = UIColor.lightGray
         howLongSegmentedControl.tintColor = UIColor.lightGray
         priceTimeSegmentedControl.tintColor = UIColor.lightGray
-        
+        animalsSwitch.onTintColor = #colorLiteral(red: 1, green: 0.320400238, blue: 0.3293212056, alpha: 1)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(tapGesture)
     }
