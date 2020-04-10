@@ -26,7 +26,7 @@ class ProfileViewController: UIViewController {
     
     func getUser() {
         let currentUserID = UserDefaults.standard.value(forKey: "user_id") as! Int
-        NetworkManager.getUserById(currentUserID) { (user) in
+        NetworkManager.shared.getUserById(currentUserID) { (user) in
             self.user = user
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()

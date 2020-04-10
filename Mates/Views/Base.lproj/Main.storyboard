@@ -172,7 +172,7 @@
                                                         <constraint firstAttribute="height" constant="40" id="H6y-oi-gK5"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" keyboardType="namePhonePad" returnKeyType="next" textContentType="name"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="namePhonePad" returnKeyType="next"/>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -196,7 +196,7 @@
                                                         <constraint firstAttribute="height" constant="40" id="xfN-cT-6p3"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" keyboardType="namePhonePad" returnKeyType="next" textContentType="name"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardType="namePhonePad" returnKeyType="next" textContentType="name"/>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -511,6 +511,11 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="qxB-g3-A1N">
+                                <rect key="frame" x="197" y="438" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" red="1" green="0.38213393410000002" blue="0.36110171429999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -530,6 +535,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="activityIndicator" destination="qxB-g3-A1N" id="ds6-N8-oYp"/>
                         <outlet property="addBarButtonItem" destination="pK5-5N-K4X" id="wbJ-TH-PZl"/>
                         <outlet property="tableView" destination="lJf-9t-joH" id="0Mu-wO-kPI"/>
                     </connections>
@@ -601,7 +607,7 @@
             </objects>
             <point key="canvasLocation" x="4595.652173913044" y="306.69642857142856"/>
         </scene>
-        <!--Новое объявление-->
+        <!--Add Ads Table View Controller-->
         <scene sceneID="l1k-nr-rQU">
             <objects>
                 <tableViewController storyboardIdentifier="AddAdsTVC" id="HLt-8D-ymc" customClass="AddAdsTableViewController" customModule="Mates" customModuleProvider="target" sceneMemberID="viewController">
@@ -610,10 +616,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
-                            <tableViewSection id="3Xg-oR-OIY">
+                            <tableViewSection headerTitle="Тип объявления" id="3Xg-oR-OIY">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="63" id="jar-G9-gwH">
-                                        <rect key="frame" x="0.0" y="18" width="414" height="63"/>
+                                        <rect key="frame" x="0.0" y="55.333332061767578" width="414" height="63"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jar-G9-gwH" id="EAK-Z6-Jz9">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="63"/>
@@ -639,10 +645,10 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection footerTitle="* Обязательно для заполнения" id="uhh-zG-Z02">
+                            <tableViewSection headerTitle="Расположение" footerTitle="* Обязательно для заполнения" id="uhh-zG-Z02">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="90" id="1DF-j3-aVe">
-                                        <rect key="frame" x="0.0" y="117" width="414" height="90"/>
+                                        <rect key="frame" x="0.0" y="181.66666412353516" width="414" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1DF-j3-aVe" id="Bbg-Pf-etZ">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="90"/>
@@ -664,11 +670,17 @@
                                                                     <rect key="frame" x="0.0" y="0.0" width="254" height="39.333333333333336"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <textInputTraits key="textInputTraits"/>
+                                                                    <connections>
+                                                                        <outlet property="delegate" destination="HLt-8D-ymc" id="Xld-En-lgK"/>
+                                                                    </connections>
                                                                 </textField>
                                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="До метро" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wbr-Ka-MY7">
                                                                     <rect key="frame" x="262" y="0.0" width="112" height="39.333333333333336"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <textInputTraits key="textInputTraits"/>
+                                                                    <connections>
+                                                                        <outlet property="delegate" destination="HLt-8D-ymc" id="Yhy-Ll-1EW"/>
+                                                                    </connections>
                                                                 </textField>
                                                             </subviews>
                                                         </stackView>
@@ -684,7 +696,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="90" id="j06-2T-plU">
-                                        <rect key="frame" x="0.0" y="207" width="414" height="90"/>
+                                        <rect key="frame" x="0.0" y="271.66666412353516" width="414" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="j06-2T-plU" id="Z9s-ar-Ede">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="90"/>
@@ -709,16 +721,25 @@
                                                                     </constraints>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                                                    <connections>
+                                                                        <outlet property="delegate" destination="HLt-8D-ymc" id="r39-7i-fcM"/>
+                                                                    </connections>
                                                                 </textField>
                                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Дом" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="w5g-JQ-ZOC">
                                                                     <rect key="frame" x="208" y="0.0" width="93.333333333333314" height="39.333333333333336"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                                    <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="next"/>
+                                                                    <connections>
+                                                                        <outlet property="delegate" destination="HLt-8D-ymc" id="tPk-xI-NMK"/>
+                                                                    </connections>
                                                                 </textField>
                                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Корпус" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KVB-g2-VTY">
                                                                     <rect key="frame" x="309.33333333333331" y="0.0" width="64.666666666666686" height="39.333333333333336"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                    <textInputTraits key="textInputTraits" returnKeyType="continue"/>
+                                                                    <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="continue"/>
+                                                                    <connections>
+                                                                        <outlet property="delegate" destination="HLt-8D-ymc" id="59G-Sy-OZA"/>
+                                                                    </connections>
                                                                 </textField>
                                                             </subviews>
                                                         </stackView>
@@ -738,7 +759,7 @@
                             <tableViewSection headerTitle="Фотографии" footerTitle="Максимум 4 фотографии" id="FDY-sf-JSv">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="70" id="Lx4-I2-h0i">
-                                        <rect key="frame" x="0.0" y="372.33333206176758" width="414" height="70"/>
+                                        <rect key="frame" x="0.0" y="436.99999618530273" width="414" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Lx4-I2-h0i" id="6cG-FT-bp4">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="70"/>
@@ -766,7 +787,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="105" id="enT-ec-Dhc">
-                                        <rect key="frame" x="0.0" y="442.33333206176758" width="414" height="105"/>
+                                        <rect key="frame" x="0.0" y="506.99999618530273" width="414" height="105"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="enT-ec-Dhc" id="Psn-cs-MWs">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="105"/>
@@ -840,10 +861,10 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection id="Jwo-4Y-sbN">
+                            <tableViewSection headerTitle="Информация" id="Jwo-4Y-sbN">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="90" id="WPD-52-Otb">
-                                        <rect key="frame" x="0.0" y="595.33333206176758" width="414" height="90"/>
+                                        <rect key="frame" x="0.0" y="679.99999618530273" width="414" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WPD-52-Otb" id="Jow-Wh-mx9">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="90"/>
@@ -881,7 +902,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="90" id="gUJ-LR-7Ho">
-                                        <rect key="frame" x="0.0" y="685.33333206176758" width="414" height="90"/>
+                                        <rect key="frame" x="0.0" y="769.99999618530273" width="414" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gUJ-LR-7Ho" id="q99-CZ-ArH">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="90"/>
@@ -919,7 +940,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="90" id="zgt-sP-EBs">
-                                        <rect key="frame" x="0.0" y="775.33333206176758" width="414" height="90"/>
+                                        <rect key="frame" x="0.0" y="859.99999618530273" width="414" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zgt-sP-EBs" id="wc7-Ys-eN8">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="90"/>
@@ -954,7 +975,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="90" id="yXG-uT-kGY">
-                                        <rect key="frame" x="0.0" y="865.33333206176758" width="414" height="90"/>
+                                        <rect key="frame" x="0.0" y="949.99999618530273" width="414" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yXG-uT-kGY" id="N8A-my-XZ5">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="90"/>
@@ -988,7 +1009,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="90" id="Tv5-iz-0DV">
-                                        <rect key="frame" x="0.0" y="955.33333206176758" width="414" height="90"/>
+                                        <rect key="frame" x="0.0" y="1039.9999961853027" width="414" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Tv5-iz-0DV" id="WPQ-yf-Dtn">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="90"/>
@@ -1019,10 +1040,10 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection id="050-ps-Z6s">
+                            <tableViewSection headerTitle="Оплата" footerTitle="* Обязательно для заполнения" id="050-ps-Z6s">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="90" id="AKR-7g-ub6">
-                                        <rect key="frame" x="0.0" y="1081.3333320617676" width="414" height="90"/>
+                                        <rect key="frame" x="0.0" y="1193.3333282470703" width="414" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AKR-7g-ub6" id="xG6-VQ-fxr">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="90"/>
@@ -1040,13 +1061,16 @@
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Sa6-iv-8VD">
                                                             <rect key="frame" x="0.0" y="28.666666666666661" width="368" height="39.333333333333343"/>
                                                             <subviews>
-                                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="10 000" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PML-F5-Cl8">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="94.666666666666671" height="39.333333333333336"/>
+                                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="10 000*" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PML-F5-Cl8">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="100.33333333333333" height="39.333333333333336"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="continue"/>
+                                                                    <connections>
+                                                                        <outlet property="delegate" destination="HLt-8D-ymc" id="7Ba-Nw-0fh"/>
+                                                                    </connections>
                                                                 </textField>
                                                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="GcK-mM-FrH">
-                                                                    <rect key="frame" x="104.66666666666666" y="0.0" width="263.33333333333337" height="40.333333333333336"/>
+                                                                    <rect key="frame" x="110.33333333333334" y="0.0" width="257.66666666666663" height="40.333333333333336"/>
                                                                     <segments>
                                                                         <segment title="Ежемесячно"/>
                                                                         <segment title="По суточно"/>
@@ -1070,7 +1094,7 @@
                             <tableViewSection headerTitle="Дополнительная информация" id="y74-wV-5aq">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="150" id="1hp-kb-Ulr">
-                                        <rect key="frame" x="0.0" y="1227.3333320617676" width="414" height="150"/>
+                                        <rect key="frame" x="0.0" y="1351.3333282470703" width="414" height="150"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1hp-kb-Ulr" id="pkH-VL-uPQ">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="150"/>
@@ -1082,6 +1106,9 @@
                                                     <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="HLt-8D-ymc" id="YlU-vv-3dD"/>
+                                                    </connections>
                                                 </textView>
                                             </subviews>
                                             <constraints>
@@ -1100,7 +1127,7 @@
                             <outlet property="delegate" destination="HLt-8D-ymc" id="Ir6-ce-XYu"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Новое объявление" id="1rl-22-4s1">
+                    <navigationItem key="navigationItem" id="1rl-22-4s1">
                         <barButtonItem key="leftBarButtonItem" title="Отмена" id="Dx7-5R-T8d">
                             <connections>
                                 <action selector="actionClose:" destination="HLt-8D-ymc" id="85o-4e-cvN"/>
@@ -1236,7 +1263,7 @@
                                                     <rect key="frame" x="20" y="5.666666666666667" width="26.666666666666668" height="15.666666666666666"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                    <nil key="textColor"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RBn-k6-bot">

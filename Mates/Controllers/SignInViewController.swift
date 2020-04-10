@@ -83,7 +83,8 @@ class SignInViewController: UIViewController {
         if (emailTextField.text != "" && passwordTextField.text != "") {
             activityIndicator.startAnimating()
             
-            NetworkManager.signIn(urlString: "/user/signin",
+            
+            NetworkManager.shared.signIn(urlString: "/user/signin",
                                   email: emailTextField.text,
                                   password: passwordTextField.text) { (data) in
                                     

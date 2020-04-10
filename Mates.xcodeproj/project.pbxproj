@@ -10,6 +10,7 @@
 		16D22B52A0BAA3D6962263C1 /* Pods_Mates.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A6D92B2DBF43C6837B8823 /* Pods_Mates.framework */; };
 		D30AECA92438AC6900DF6DAF /* StationsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30AECA82438AC6900DF6DAF /* StationsList.swift */; };
 		D30AECAB2438D6CA00DF6DAF /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30AECAA2438D6CA00DF6DAF /* ImageCollectionViewCell.swift */; };
+		D3440C992440E87300A58617 /* Ad.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3440C982440E87300A58617 /* Ad.swift */; };
 		D3554C162430E42D00444C6E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3554C152430E42D00444C6E /* AppDelegate.swift */; };
 		D3554C182430E42D00444C6E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3554C172430E42D00444C6E /* SceneDelegate.swift */; };
 		D3554C1A2430E42D00444C6E /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3554C192430E42D00444C6E /* SignInViewController.swift */; };
@@ -36,6 +37,7 @@
 		4EFF147306E71468218D3E3C /* Pods-Mates.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mates.debug.xcconfig"; path = "Target Support Files/Pods-Mates/Pods-Mates.debug.xcconfig"; sourceTree = "<group>"; };
 		D30AECA82438AC6900DF6DAF /* StationsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationsList.swift; sourceTree = "<group>"; };
 		D30AECAA2438D6CA00DF6DAF /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		D3440C982440E87300A58617 /* Ad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ad.swift; sourceTree = "<group>"; };
 		D3554C122430E42D00444C6E /* Mates.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mates.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3554C152430E42D00444C6E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3554C172430E42D00444C6E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				D3E8879E24337611001FFA50 /* User.swift */,
+				D3440C982440E87300A58617 /* Ad.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -296,6 +299,7 @@
 			files = (
 				D3554C202430E42D00444C6E /* Mates.xcdatamodeld in Sources */,
 				D3554C1A2430E42D00444C6E /* SignInViewController.swift in Sources */,
+				D3440C992440E87300A58617 /* Ad.swift in Sources */,
 				D3B01EC02439EA3400F1772B /* AdTableViewController.swift in Sources */,
 				D3B01EC32439EE3B00F1772B /* BigImageCollectionViewCell.swift in Sources */,
 				D3E887932430E5AF001FFA50 /* NetworkManager.swift in Sources */,

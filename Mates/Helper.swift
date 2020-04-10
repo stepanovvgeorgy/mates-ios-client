@@ -10,11 +10,16 @@ import UIKit
 
 class Helper {
     
-    class func startApp(window: UIWindow?) {
+    static var shared: Helper = {
+        let instance = Helper()
+        return instance
+    }()
+    
+    func startApp(window: UIWindow?) {
         
         let token = UserDefaults.standard.value(forKey: "token")
         let user_id = UserDefaults.standard.value(forKey: "user_id")
-
+        
         let isAuth = token != nil && user_id != nil
         
         if isAuth {
@@ -23,13 +28,13 @@ class Helper {
         }
     }
     
-    class func styledNavigationBar(navigationController: UINavigationController?, backgroundColor: UIColor?, textColor: UIColor?, isTranslucent: Bool?) {
+    func styledNavigationBar(navigationController: UINavigationController?, backgroundColor: UIColor?, textColor: UIColor?, isTranslucent: Bool?) {
         navigationController?.navigationBar.barTintColor = backgroundColor ?? UIColor.black
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: textColor ?? UIColor.white]
         navigationController?.navigationBar.isTranslucent = isTranslucent ?? true
     }
     
-    class func showInfoAlert(title: String?, message: String?) -> UIAlertController? {
+    func showInfoAlert(title: String?, message: String?) -> UIAlertController? {
         guard let title = title else {return nil}
         guard let message = message else {return nil}
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -38,7 +43,7 @@ class Helper {
         return alert
     }
     
-    class func navigationBarWithImage(vc: UIViewController?, imageNamed: String, width: Double, height: Double) {
+    func navigationBarWithImage(vc: UIViewController?, imageNamed: String, width: Double, height: Double) {
         let image = UIImage(named: imageNamed)
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: width, height: height))
         imageView.contentMode = .scaleAspectFit
@@ -46,7 +51,7 @@ class Helper {
         vc?.navigationItem.titleView = imageView
     }
     
-    class func customBarButtonWithImage(vc: UIViewController?, selector: Selector, image: UIImage) -> UIBarButtonItem {
+    func customBarButtonWithImage(vc: UIViewController?, selector: Selector, image: UIImage) -> UIBarButtonItem {
         let button = UIButton(type: .custom)
         button.frame = CGRect(x: 0.0, y: 0.0, width: 20, height: 20)
         button.setImage(image, for: .normal)
@@ -63,8 +68,22 @@ class Helper {
         return barButton
     }
     
-    static func randomString(length: Int) -> String {
+    func randomString(length: Int) -> String {
         let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         return String((0..<length).map{ _ in letters.randomElement()! })
+    }
+    
+    func activityAlert() -> UIAlertController {
+        let alert = UIAlertController(title: "Публикация...", message: "", preferredStyle: .alert)
+        
+        let activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 40, width: alert.view.bounds.width, height: alert.view.bounds.height - 40))
+        activityIndicator.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        alert.view.addSubview(activityIndicator)
+        
+        activityIndicator.isUserInteractionEnabled = false
+        activityIndicator.startAnimating()
+        
+        return alert
     }
 }

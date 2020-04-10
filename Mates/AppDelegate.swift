@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         if AppDelegate.iosVersion < 13.0 {
-            Helper.startApp(window: window)
+            Helper.shared.startApp(window: window)
         }
         
         return true

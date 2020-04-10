@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 let timeToSubwayList = [
     "5 минут",
@@ -15,7 +16,6 @@ let timeToSubwayList = [
     "20 минут",
     "25+ минут"
 ]
-
 
 class AddAdsTableViewController: UITableViewController {
     
@@ -47,7 +47,9 @@ class AddAdsTableViewController: UITableViewController {
     
     let subwayPickerView = UIPickerView()
     let timeToSubwayPickerView = UIPickerView()
-
+    
+    let toolbar = UIToolbar(frame:CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -69,9 +71,18 @@ class AddAdsTableViewController: UITableViewController {
         imagesCollectionView.delegate = self
         imagesCollectionView.dataSource = self
         
+        let nextBarButtonItem = UIBarButtonItem(title: "Далее", style: .done, target: self, action: #selector(nextTextField(_:)))
+        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        toolbar.items = [spacer, nextBarButtonItem]
+        
+        toolbar.tintColor = #colorLiteral(red: 1, green: 0.320400238, blue: 0.3293212056, alpha: 1)
+        
         timeToSubwayTextField.inputView = timeToSubwayPickerView
+        timeToSubwayTextField.inputAccessoryView = toolbar
         
         subwayTextField.inputView = subwayPickerView
+        subwayTextField.inputAccessoryView = toolbar
         
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
@@ -87,6 +98,13 @@ class AddAdsTableViewController: UITableViewController {
         view.addGestureRecognizer(tapGesture)
     }
     
+    @objc func nextTextField(_ sender: UIBarButtonItem) {
+        if subwayTextField.isFirstResponder {
+            timeToSubwayTextField.becomeFirstResponder()
+        } else if timeToSubwayTextField.isFirstResponder {
+            streetTextField.becomeFirstResponder()
+        }
+    }
     
     @objc func hideKeyboard() {
         view.endEditing(true)
@@ -99,18 +117,69 @@ class AddAdsTableViewController: UITableViewController {
     }
     
     @IBAction func actionPublish(_ sender: UIBarButtonItem) {
-        uploadImages()
+        sendAd()
     }
+    
+    func sendAd() {
         
-    func uploadImages() {
-        if !attachmentImages.isEmpty {
-            for image in attachmentImages {
-                NetworkManager.uploadImage(image) {
-     
+        if !subwayTextField.text!.isEmpty
+            && !streetTextField.text!.isEmpty
+            && !priceTextField.text!.isEmpty {
+            
+            let parameters: [String: Any] = [
+                "type": typeSegmentControl.selectedSegmentIndex,
+                "subway": subwayTextField.text!,
+                "time_to_subway": timeToSubwayTextField.text!,
+                "street": streetTextField.text!,
+                "number_of_house": numberOfHouseTextField.text!,
+                "housing": housingTextField.text!,
+                "number_of_rooms": numberOfRoomsSegmentedControl.selectedSegmentIndex,
+                "number_of_sales_rooms": salesNumberRoomsSegmentedControl.selectedSegmentIndex,
+                "gender_mate": genderMateSegmentedControl.selectedSegmentIndex,
+                "time_to_sale": howLongSegmentedControl.selectedSegmentIndex,
+                "animals": animalsSwitch.isOn,
+                "price": priceTextField.text!,
+                "price_to_time": priceTimeSegmentedControl.selectedSegmentIndex,
+                "info_text": infoTextView.text!,
+            ]
+            
+            let activityAlert = Helper.shared.activityAlert()
+            
+            present(activityAlert, animated: true, completion: nil)
+            
+            NetworkManager.shared.sendAd(data: parameters) { (adID) in
+                
+                if !self.attachmentImages.isEmpty {
+                    
+                    var countImages = self.attachmentImages.count
+                    
+                    for image in self.attachmentImages {
+                        NetworkManager.shared.uploadImage(image, adID: "\(adID)") {
+                            countImages = countImages - 1
+                            if countImages == 0 {
+                                activityAlert.dismiss(animated: true) {
+                                    
+                                    let alert = UIAlertController(title: "Объявление опубликовано", message: nil, preferredStyle: .alert)
+                                    let okButton = UIAlertAction(title: "Ок", style: .cancel) { (action) in
+                                        self.dismiss(animated: true, completion: nil)
+                                    }
+                                    
+                                    alert.addAction(okButton)
+                                    
+                                    self.present(alert, animated: true, completion: nil)
+                                }
+                            }
+                        }
+                    }
+                    
                 }
             }
+            
+        } else {
+            present(Helper.shared.showInfoAlert(title: "Ошибка", message: "Заполните все обязательные поля")!, animated: true, completion: nil)
         }
     }
+    
     
     @IBAction func actionClose(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
@@ -120,7 +189,7 @@ class AddAdsTableViewController: UITableViewController {
         if attachmentImages.count < 4 {
             present(imagePicker, animated: true, completion: nil)
         } else {
-            present(Helper.showInfoAlert(title: "Ошибка", message: "Вы можете прикрепить не более четырех изображений")!, animated: true)
+            present(Helper.shared.showInfoAlert(title: "Ошибка", message: "Вы можете прикрепить не более четырех изображений")!, animated: true)
         }
     }
     
@@ -145,6 +214,40 @@ class AddAdsTableViewController: UITableViewController {
         return 85
     }
     
+}
+
+extension AddAdsTableViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField.isEqual(subwayTextField) {
+            if subwayTextField.text!.isEmpty {
+                subwayTextField.text = StationsList.all[0]
+            }
+        }
+        if textField.isEqual(timeToSubwayTextField) {
+            if timeToSubwayTextField.text!.isEmpty {
+                timeToSubwayTextField.text = timeToSubwayList[0]
+            }
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField.isEqual(streetTextField) {
+            if !streetTextField.text!.isEmpty {
+                numberOfHouseTextField.becomeFirstResponder()
+            }
+        }
+        if textField.isEqual(numberOfHouseTextField) {
+            if !numberOfHouseTextField.text!.isEmpty {
+                housingTextField.becomeFirstResponder()
+            }
+        }
+        if textField.isEqual(housingTextField) {
+            if !housingTextField.text!.isEmpty {
+                housingTextField.resignFirstResponder()
+            }
+        }
+        return true
+    }
 }
 
 extension AddAdsTableViewController: UICollectionViewDelegate, UICollectionViewDataSource {

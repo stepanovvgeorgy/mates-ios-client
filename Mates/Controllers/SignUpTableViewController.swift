@@ -38,7 +38,7 @@ class SignUpTableViewController: UITableViewController {
         passwordTextField.setIcon(#imageLiteral(resourceName: "lock"))
         passwordRepeatTextField.setIcon(#imageLiteral(resourceName: "lock"))
         
-        Helper.styledNavigationBar(navigationController: navigationController,
+        Helper.shared.styledNavigationBar(navigationController: navigationController,
                                    backgroundColor: #colorLiteral(red: 1, green: 0.320400238, blue: 0.3293212056, alpha: 1),
                                    textColor: .white,
                                    isTranslucent: true)
@@ -47,7 +47,6 @@ class SignUpTableViewController: UITableViewController {
         bDatePicker.datePickerMode = .date
         bDatePicker.locale = Locale(identifier: "ru_RU")
         bDatePicker.addTarget(self, action: #selector(setBDate(_:)), for: .valueChanged)
-    
         
         let bDateNextBarButton = UIBarButtonItem(title: "Далее", style: .done, target: self, action: #selector(bDateNextField(_:)))
         let bDateSpacerItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -91,14 +90,14 @@ class SignUpTableViewController: UITableViewController {
                 }
                 
             } else {
-                present(Helper.showInfoAlert(title: "Ошибка", message: "Заполните все поля")!,
+                present(Helper.shared.showInfoAlert(title: "Ошибка", message: "Заполните все поля")!,
                         animated: true,
                         completion: nil)
             }
         }
         
         if !passwordsEqual {
-            present(Helper.showInfoAlert(title: "Ошибка", message: "Пароли не совпадают")!,
+            present(Helper.shared.showInfoAlert(title: "Ошибка", message: "Пароли не совпадают")!,
                     animated: true,
                     completion: nil)
         }
@@ -113,7 +112,7 @@ class SignUpTableViewController: UITableViewController {
                             phone: phoneTextField.text!,
                             password: passwordTextField.text!)
             
-            NetworkManager.signUp(urlString: "/user/signup", user: user) { (data) in
+            NetworkManager.shared.signUp(urlString: "/user/signup", user: user) { (data) in
                 
                 let jsonData = JSON(data)
                 
