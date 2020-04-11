@@ -6,7 +6,7 @@
 //  Copyright © 2020 Georgy Stepanov. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct Ad {
     
@@ -26,6 +26,6 @@ struct Ad {
     let priceToTime: Int?
     let infoText: String?
     let userID: Int?
-    let attachmets: [String]?
-
+    var attachmets: [String]?
+    var firstImage: UIImage?
 }

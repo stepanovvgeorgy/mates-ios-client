@@ -13,6 +13,7 @@ import SwiftyJSON
 class NetworkManager {
     
     let serverUrl = "http://192.168.1.5:5000/api"
+    let uploadsUrl = "http://192.168.1.5:5000/uploads"
     
     static var shared: NetworkManager = {
         let instance = NetworkManager()
@@ -153,14 +154,14 @@ class NetworkManager {
         }
     }
     
-    func getAds(_ completion: @escaping (_ ads: [Ad]) -> ()) {
+    func getAds(url: String, _ completion: @escaping (_ ads: [Ad]) -> ()) {
         let headersDict: [String: String] = [
             "Content-Type": "application/json",
             "token": UserDefaults.standard.value(forKey: "token") as! String
         ]
         
         let headers = HTTPHeaders(headersDict)
-        let url = URL(string: "\(serverUrl)/ad/all")
+        let url = URL(string: "\(serverUrl)\(url)")
         
         AF.request(url!, method: .get, headers: headers).validate().responseJSON { (response) in
             switch response.result {
@@ -203,6 +204,29 @@ class NetworkManager {
                 print(error.localizedDescription)
             }
         }
-
+    }
+    
+    func getFirstImageByAdID(_ id: Int, _ completion: @escaping (_ image: AdImage) -> ()) {
+        let headersDict: [String: String] = [
+            "Content-Type": "application/json",
+            "token": UserDefaults.standard.value(forKey: "token") as! String
+        ]
+        
+        let headers = HTTPHeaders(headersDict)
+        let url = URL(string: "\(serverUrl)/images/first/\(id)")
+        
+        AF.request(url!, method: .get, headers: headers).validate().responseJSON { (response) in
+            switch response.result {
+            case .success(let jsonImage):
+                let data = JSON(jsonImage)
+                
+                let image = AdImage(adID: data["AdId"].intValue, id: data["id"].intValue, name: data["name"].stringValue)
+                
+                completion(image)
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }

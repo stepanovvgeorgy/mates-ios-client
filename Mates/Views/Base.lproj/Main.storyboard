@@ -511,16 +511,17 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="qxB-g3-A1N">
-                                <rect key="frame" x="197" y="438" width="20" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="qxB-g3-A1N">
+                                <rect key="frame" x="188.66666666666666" y="429.66666666666669" width="37" height="37"/>
                                 <color key="color" red="1" green="0.38213393410000002" blue="0.36110171429999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="Sbs-M6-1vD" firstAttribute="trailing" secondItem="lJf-9t-joH" secondAttribute="trailing" id="4TC-AC-Kcs"/>
+                            <constraint firstItem="qxB-g3-A1N" firstAttribute="centerY" secondItem="Sbs-M6-1vD" secondAttribute="centerY" constant="-2.5" id="Utk-Pq-jOB"/>
                             <constraint firstItem="lJf-9t-joH" firstAttribute="top" secondItem="Sbs-M6-1vD" secondAttribute="top" id="cmY-Do-ng5"/>
+                            <constraint firstItem="qxB-g3-A1N" firstAttribute="centerX" secondItem="Sbs-M6-1vD" secondAttribute="centerX" id="j8e-Qx-8fS"/>
                             <constraint firstItem="Sbs-M6-1vD" firstAttribute="bottom" secondItem="lJf-9t-joH" secondAttribute="bottom" id="lm2-Cc-mk7"/>
                             <constraint firstItem="lJf-9t-joH" firstAttribute="leading" secondItem="Sbs-M6-1vD" secondAttribute="leading" id="uYt-jI-vnI"/>
                         </constraints>
