@@ -74,60 +74,61 @@ class SignUpTableViewController: UITableViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ru_RU")
         dateFormatter.dateFormat = "d MMMM yyyy"
+        
+        let calendar = Calendar(identifier: .gregorian)
+        let currentDate = Date()
+        var components = DateComponents()
+        
+        components.calendar = calendar
+        components.year = -18
+        
+        let maxDate = calendar.date(byAdding: components, to: currentDate)!
+        
+        sender.maximumDate = maxDate
         bDateTextField.text = dateFormatter.string(from: sender.date)
     }
 
     func signUp() {
-        
-        var allFieldsEmpty = true
-        var passwordsEqual = false
-        
-        signUpFields.forEach { (textfield) in
-            if textfield.text != "" {
-                if signUpFields[5].text == signUpFields[6].text {
-                    allFieldsEmpty = false
-                    passwordsEqual = true
-                }
-                
+        if !firstNameTextFeild.text!.isEmpty &&
+        !lastNameTextField.text!.isEmpty &&
+        !bDateTextField.text!.isEmpty &&
+        !emailTextField.text!.isEmpty &&
+        !phoneTextField.text!.isEmpty &&
+        !passwordTextField.text!.isEmpty &&
+        !passwordRepeatTextField.text!.isEmpty {
+            
+            if passwordTextField.text! != passwordRepeatTextField.text! {
+                let alert = Helper.shared.showInfoAlert(title: "Ошибка", message: "Пароли не совпадают")
+                present(alert!, animated: true, completion: nil)
             } else {
-                present(Helper.shared.showInfoAlert(title: "Ошибка", message: "Заполните все поля")!,
-                        animated: true,
-                        completion: nil)
+                let user = User(first_name: firstNameTextFeild.text!,
+                                last_name: lastNameTextField.text!,
+                                b_date: bDateTextField.text!,
+                                gender: genderSegmentControl.selectedSegmentIndex,
+                                email: emailTextField.text!,
+                                phone: phoneTextField.text!,
+                                password: passwordTextField.text!,
+                                avatar: nil)
+                
+                NetworkManager.shared.signUp(urlString: "/user/signup", user: user) { (data) in
+                    
+                    let jsonData = JSON(data)
+                    
+                    UserDefaults.standard.set(jsonData["token"].stringValue, forKey: "token")
+                    UserDefaults.standard.set(jsonData["user_id"].intValue, forKey: "user_id")
+                 
+                    let innerVC = self.storyboard?.instantiateViewController(withIdentifier: "InnerTabBarController")
+                    
+                    innerVC?.modalPresentationStyle = .fullScreen
+                    
+                    self.present(innerVC!, animated: true, completion: nil)
+                    
+                }
             }
+        } else {
+            let alert = Helper.shared.showInfoAlert(title: "Ошибка", message: "Заполните все поля")
+            present(alert!, animated: true, completion: nil)
         }
-        
-        if !passwordsEqual {
-            present(Helper.shared.showInfoAlert(title: "Ошибка", message: "Пароли не совпадают")!,
-                    animated: true,
-                    completion: nil)
-        }
-        
-        if !allFieldsEmpty {
-            
-            let user = User(first_name: firstNameTextFeild.text!,
-                            last_name: lastNameTextField.text!,
-                            b_date: bDateTextField.text!,
-                            gender: genderSegmentControl.selectedSegmentIndex,
-                            email: emailTextField.text!,
-                            phone: phoneTextField.text!,
-                            password: passwordTextField.text!)
-            
-            NetworkManager.shared.signUp(urlString: "/user/signup", user: user) { (data) in
-                
-                let jsonData = JSON(data)
-                
-                UserDefaults.standard.set(jsonData["token"].stringValue, forKey: "token")
-                UserDefaults.standard.set(jsonData["user_id"].intValue, forKey: "user_id")
-             
-                let innerVC = self.storyboard?.instantiateViewController(withIdentifier: "InnerTabBarController")
-                
-                innerVC?.modalPresentationStyle = .fullScreen
-                
-                self.present(innerVC!, animated: true, completion: nil)
-                
-            }
-        }
-        
     }
     
     @IBAction func actionSignUp(_ sender: UIButton) {
@@ -139,3 +140,31 @@ class SignUpTableViewController: UITableViewController {
     }
 }
 
+extension SignUpTableViewController: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField.isEqual(bDateTextField) {
+            setBDate(bDatePicker)
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField.isEqual(firstNameTextFeild) {
+            lastNameTextField.becomeFirstResponder()
+        }
+        if textField.isEqual(lastNameTextField) {
+            bDateTextField.becomeFirstResponder()
+        }
+        if textField.isEqual(emailTextField) {
+            phoneTextField.becomeFirstResponder()
+        }
+        if textField.isEqual(passwordTextField) {
+            passwordRepeatTextField.becomeFirstResponder()
+        }
+        if textField.isEqual(passwordRepeatTextField) {
+            textField.resignFirstResponder()
+        }
+        return true
+    }
+    
+}

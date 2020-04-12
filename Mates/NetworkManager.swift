@@ -9,11 +9,12 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
+import SDWebImage
 
 class NetworkManager {
     
-    let serverUrl = "http://192.168.1.5:5000/api"
-    let uploadsUrl = "http://192.168.1.5:5000/uploads"
+    let serverUrl = "http://192.168.1.5:5500/api"
+    let uploadsUrl = "http://192.168.1.5:5500/uploads"
     
     static var shared: NetworkManager = {
         let instance = NetworkManager()
@@ -108,7 +109,8 @@ class NetworkManager {
                                           gender: data["gender"].intValue,
                                           email: data["email"].stringValue,
                                           phone: data["phone"].stringValue,
-                                          password: "")
+                                          password: nil,
+                                          avatar: "\(self.uploadsUrl)/\(data["avatar"].stringValue)")
                 
                 completion(userFromServer)
                 
@@ -118,17 +120,26 @@ class NetworkManager {
         }
     }
     
-    func uploadImage(_ image: UIImage, adID: String, _ completion: @escaping () -> ()) {
+    func uploadImage(url: String, _ image: UIImage, adID: String?, _ completion: @escaping () -> ()) {
         guard let imageData = image.jpegData(compressionQuality: 0.1) else {return}
         
         AF.upload(multipartFormData: { (form) in
             form.append(imageData, withName: "file_data", fileName: "\(Helper.shared.randomString(length: 7)).jpg", mimeType: "image/jpeg")
-            form.append((adID as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: "ad_id")
-        }, to: "\(serverUrl)/images/upload", method: .post).response { result in
+            
+            if adID != nil {
+                form.append((adID as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: "ad_id")
+            }
+            
+            let token = UserDefaults.standard.value(forKey: "token") as! String
+
+            form.append((token as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: "token")
+            
+        }, to: "\(serverUrl)\(url)", method: .post).response { result in
             print(result)
             completion()
         }
     }
+    
     
     func sendAd(data: [String: Any], _ completion: @escaping (_ adID: Int) -> ()) {
         let headersDict: [String: String] = [
@@ -168,12 +179,13 @@ class NetworkManager {
             case .success(let dataJson):
                 
                 let data = JSON(dataJson)
-
+                
                 if !data.array!.isEmpty {
                     
                     var adsArray = Array<Ad>()
                     
                     data.array!.forEach { (item) in
+                        
                         let ad = Ad(id: item["id"].intValue,
                                     type: item["type"].intValue,
                                     subway: item["subway"].stringValue,
@@ -190,7 +202,10 @@ class NetworkManager {
                                     priceToTime: item["price_to_time"].intValue,
                                     infoText: item["info_text"].stringValue,
                                     userID: item["UserId"].intValue,
-                                    attachmets: nil)
+                                    previewImage: "\(NetworkManager.shared.uploadsUrl)/\(item["Images"][0]["name"].stringValue)",
+                                    images: nil)
+                        
+                        
                         adsArray.append(ad)
                     }
                     

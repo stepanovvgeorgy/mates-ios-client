@@ -124,7 +124,8 @@ class AddAdsTableViewController: UITableViewController {
         
         if !subwayTextField.text!.isEmpty
             && !streetTextField.text!.isEmpty
-            && !priceTextField.text!.isEmpty {
+            && !priceTextField.text!.isEmpty
+            && attachmentImages.count != 0 {
             
             let parameters: [String: Any] = [
                 "type": typeSegmentControl.selectedSegmentIndex,
@@ -154,7 +155,7 @@ class AddAdsTableViewController: UITableViewController {
                     var countImages = self.attachmentImages.count
                     
                     for image in self.attachmentImages {
-                        NetworkManager.shared.uploadImage(image, adID: "\(adID)") {
+                        NetworkManager.shared.uploadImage(url: "/images/upload", image, adID: "\(adID)") {
                             countImages = countImages - 1
                             if countImages == 0 {
                                 activityAlert.dismiss(animated: true) {
@@ -176,7 +177,7 @@ class AddAdsTableViewController: UITableViewController {
             }
             
         } else {
-            present(Helper.shared.showInfoAlert(title: "Ошибка", message: "Заполните все обязательные поля")!, animated: true, completion: nil)
+            present(Helper.shared.showInfoAlert(title: "Ошибка", message: "Заполните все обязательные поля и добавьте фотографии квартиры")!, animated: true, completion: nil)
         }
     }
     

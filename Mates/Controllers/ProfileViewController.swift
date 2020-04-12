@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ProfileViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
+    var imagePicker: UIImagePickerController = UIImagePickerController()
+        
     var user: User?
     
     override func viewDidLoad() {
@@ -20,7 +23,14 @@ class ProfileViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.isHidden = true
+        tableView.contentInset = UIEdgeInsets(top: 20, left:0, bottom: 20, right: 0)
+        
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        
+        
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 0.320400238, blue: 0.3293212056, alpha: 1)
+        
         getUser()
     }
     
@@ -35,16 +45,31 @@ class ProfileViewController: UIViewController {
     }
 }
 
+extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+        NetworkManager.shared.uploadImage(url: "/images/avatar", image, adID: nil) {
+            self.tableView.reloadData()
+            picker.dismiss(animated: true)
+        }
+    }
+}
+
 extension ProfileViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         if section == 0 {
+            return 0
+        }
+        
+        if section == 1 {
             return 4
         }
-        if section == 1 {
+        if section == 2 {
             return 2
         }
         return 0
@@ -54,28 +79,28 @@ extension ProfileViewController: UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserInfoCell", for: indexPath)
         
-        if indexPath.section == 0 && indexPath.row == 0 {
-                        
+        if indexPath.section == 1 && indexPath.row == 0 {
+            
             cell.textLabel!.text = "Имя"
             cell.detailTextLabel!.text = user?.first_name
             
-        } else if indexPath.section == 0 && indexPath.row == 1 {
+        } else if indexPath.section == 1 && indexPath.row == 1 {
             cell.textLabel!.text = "Фамилия"
             cell.detailTextLabel!.text = user?.last_name
-        } else if indexPath.section == 0 && indexPath.row == 2 {
+        } else if indexPath.section == 1 && indexPath.row == 2 {
             cell.textLabel!.text = "Дата рождения"
             cell.detailTextLabel!.text = user?.b_date
-        } else if indexPath.section == 0 && indexPath.row == 3 {
+        } else if indexPath.section == 1 && indexPath.row == 3 {
             cell.textLabel!.text = "Пол"
             if user?.gender == 0 {
                 cell.detailTextLabel!.text = "Жен."
             } else {
                 cell.detailTextLabel!.text = "Муж."
             }
-        } else if indexPath.section == 1 && indexPath.row == 0 {
+        } else if indexPath.section == 2 && indexPath.row == 0 {
             cell.textLabel!.text = "Email"
             cell.detailTextLabel!.text = user?.email
-        } else if indexPath.section == 1 && indexPath.row == 1 {
+        } else if indexPath.section == 2 && indexPath.row == 1 {
             cell.textLabel!.text = "Телефон"
             cell.detailTextLabel!.text = user?.phone
         }
@@ -86,14 +111,79 @@ extension ProfileViewController: UITableViewDataSource {
 
 extension ProfileViewController: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        if section == 0 {
+            
+            let view = tableView.dequeueReusableCell(withIdentifier: "AvatarCell") as! AvatarTableViewCell
+                        
+            view.avatarImageView.layer.cornerRadius = 45
+            view.avatarImageView.clipsToBounds = true
+                        
+            guard let avatarUrl = URL(string: user?.avatar ?? "") else {return view}
+
+            view.avatarImageView.sd_setImage(with: avatarUrl, placeholderImage: #imageLiteral(resourceName: "user-circle"), options: .delayPlaceholder) { (image, error, cache, url) in
+                if error == nil {
+                    view.avatarImageView.image = image
+                } else {
+                    print(error?.localizedDescription as Any)
+                }
+            }
+
+            
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentImagePicker(_:)))
+            
+            
+            view.addGestureRecognizer(tapGesture)
+            
+            return view
+        }
+        
+        return nil
+        
+    }
+    
+    @objc func presentImagePicker(_ sender: UIView) {
+        
+        let actionSheet = UIAlertController(title: "Фотография",
+                                            message: nil,
+                                            preferredStyle: .actionSheet)
+        let showPicker = UIAlertAction(title: "Выбрать фотографию", style: .default) { (action) in
+            self.present(self.imagePicker, animated: true, completion: nil)
+        }
+        
+        let cancel = UIAlertAction(title: "Отмена", style: .cancel) { (action) in
+            self.dismiss(animated: true, completion: nil)
+        }
+        
+        actionSheet.addAction(showPicker)
+        actionSheet.addAction(cancel)
+        
+        present(actionSheet, animated: true, completion: nil)
+        
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 100
+        }
+        return 20
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 && indexPath.row == 0 {
+            cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        }
+    }
+    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
+        if section == 1 {
             return "Личная информация"
-        } else if section == 1 {
+        } else if section == 2 {
             return "Контактная информация"
         }
         return nil

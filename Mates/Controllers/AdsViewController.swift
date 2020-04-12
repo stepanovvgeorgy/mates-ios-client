@@ -32,7 +32,7 @@ class AdsViewController: UIViewController {
         
         refreshControl.addTarget(self, action: #selector(refresh(_:)), for: UIControl.Event.valueChanged)
         tableView.addSubview(refreshControl) // not required when using UITableViewController
-        
+                
         getAds()
     }
     
@@ -43,7 +43,6 @@ class AdsViewController: UIViewController {
     
     func getAds() {
         NetworkManager.shared.getAds(url: "/ad/min?page=\(pageNumber)&limit=\(adsLimit)") { (ads) in
-        
             self.adsArray.append(contentsOf: ads)
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
@@ -66,9 +65,9 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AdsCell", for: indexPath) as! AdsTableViewCell
         
         let ad = adsArray[indexPath.row]
-                
+                        
         cell.locationLabel.text = ad.subway
-        
+
         var time = ""
         
         if ad.priceToTime! == 0 {
@@ -79,6 +78,19 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
         
         cell.priceLabel.text = "\(ad.price!) \(time)"
         
+        guard let imageUrl = URL(string: ad.previewImage!) else {return cell}
+    
+        cell.sd_imageIndicator = SDWebImageActivityIndicator.gray
+        cell.sd_imageIndicator?.startAnimatingIndicator()
+        cell.photoImageView.sd_setImage(with: imageUrl) { (image, error, cache, url) in
+            if error != nil {
+                print(error!.localizedDescription)
+            } else {
+                cell.photoImageView.image = image
+                cell.sd_imageIndicator?.stopAnimatingIndicator()
+            }
+        }
+                
         return cell
     }
     

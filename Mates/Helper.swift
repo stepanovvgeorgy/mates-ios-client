@@ -86,4 +86,16 @@ class Helper {
         
         return alert
     }
+    
+    func convertImageToBase64(_ image: UIImage) -> String {
+        let imageData:NSData = image.jpegData(compressionQuality: 0.1)! as NSData
+        let strBase64 = imageData.base64EncodedString(options: .lineLength64Characters)
+        return strBase64
+    }
+    
+    func convertBase64ToImage(_ str: String) -> UIImage {
+        let dataDecoded: Data = Data(base64Encoded: str, options: .ignoreUnknownCharacters)!
+        let decodedimage = UIImage(data: dataDecoded)
+        return decodedimage!
+    }
 }

@@ -26,6 +26,6 @@ struct Ad {
     let priceToTime: Int?
     let infoText: String?
     let userID: Int?
-    var attachmets: [String]?
-    var firstImage: UIImage?
+    let previewImage: String?
+    let images: [Any]?
 }
