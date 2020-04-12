@@ -12,7 +12,8 @@ class AdsTableViewCell: UITableViewCell {
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
-    
+    @IBOutlet weak var firstNameLabel: UILabel!
+    @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var blurVisualEffectView: UIVisualEffectView!
     
     override func setSelected(_ selected: Bool, animated: Bool) {

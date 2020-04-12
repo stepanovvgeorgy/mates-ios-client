@@ -262,11 +262,24 @@ extension AddAdsTableViewController: UICollectionViewDelegate, UICollectionViewD
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! ImageCollectionViewCell
         
         cell.layer.cornerRadius = 5
+        cell.clipsToBounds = true
         
         cell.photoImageView.image = attachmentImages[indexPath.row]
+        cell.removeButton.tag = indexPath.row
+        cell.removeButton.addTarget(self, action: #selector(removeImage(_:)), for: .touchUpInside)
         
         return cell
         
+    }
+    
+    @objc func removeImage(_ sender: UIButton) {
+        let indexPath = IndexPath(item: sender.tag, section: 0)        
+        imagesCollectionView.performBatchUpdates({
+            self.attachmentImages.remove(at: sender.tag)
+            self.imagesCollectionView.deleteItems(at: [indexPath])
+        }) { (completion) in
+            self.imagesCollectionView.reloadData()
+        }
     }
 }
 

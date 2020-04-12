@@ -31,14 +31,13 @@ class AdsViewController: UIViewController {
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 0.320400238, blue: 0.3293212056, alpha: 1)
         
         refreshControl.addTarget(self, action: #selector(refresh(_:)), for: UIControl.Event.valueChanged)
-        tableView.addSubview(refreshControl) // not required when using UITableViewController
+        tableView.addSubview(refreshControl)
                 
         getAds()
     }
     
     @objc func refresh(_ sender: AnyObject) {
         refreshControl.endRefreshing()
-        getAds()
     }
     
     func getAds() {
@@ -90,6 +89,18 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.sd_imageIndicator?.stopAnimatingIndicator()
             }
         }
+        
+        guard let avatarUrl = URL(string: ad.userAvatarString!) else {return cell}
+        
+        cell.avatarImageView.sd_setImage(with: avatarUrl, placeholderImage: #imageLiteral(resourceName: "user-circle"), options: .delayPlaceholder) { (image, error, cache, url) in
+            if error != nil {
+                cell.avatarImageView.image = image
+            } else {
+                print(error?.localizedDescription as Any)
+            }
+        }
+        
+        cell.firstNameLabel.text = ad.userFirstName
                 
         return cell
     }

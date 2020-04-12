@@ -135,7 +135,6 @@ class NetworkManager {
             form.append((token as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: "token")
             
         }, to: "\(serverUrl)\(url)", method: .post).response { result in
-            print(result)
             completion()
         }
     }
@@ -202,8 +201,10 @@ class NetworkManager {
                                     priceToTime: item["price_to_time"].intValue,
                                     infoText: item["info_text"].stringValue,
                                     userID: item["UserId"].intValue,
-                                    previewImage: "\(NetworkManager.shared.uploadsUrl)/\(item["Images"][0]["name"].stringValue)",
-                                    images: nil)
+                                    previewImage: "\(self.uploadsUrl)/\(item["Images"][0]["name"].stringValue)",
+                                    images: nil,
+                                    userFirstName: item["User"]["first_name"].stringValue,
+                                    userAvatarString: "\(self.uploadsUrl)/\(item["User"]["avatar"].stringValue)")
                         
                         
                         adsArray.append(ad)

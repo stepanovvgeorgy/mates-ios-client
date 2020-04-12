@@ -9,7 +9,6 @@
 import UIKit
 
 struct Ad {
-    
     let id: Int?
     let type: Int?
     let subway: String?
@@ -28,4 +27,6 @@ struct Ad {
     let userID: Int?
     let previewImage: String?
     let images: [Any]?
+    let userFirstName: String?
+    let userAvatarString: String?
 }
