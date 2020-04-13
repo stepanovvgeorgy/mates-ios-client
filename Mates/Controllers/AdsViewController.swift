@@ -41,16 +41,25 @@ class AdsViewController: UIViewController {
     }
     
     func getAds() {
+        print("adsVC getAds pageNumber=\(pageNumber); limit=\(adsLimit)")
         NetworkManager.shared.getAds(url: "/ad/min?page=\(pageNumber)&limit=\(adsLimit)") { (ads) in
             self.adsArray.append(contentsOf: ads)
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
+            print("adsArray.count = \(self.adsArray.count)")
+            print("!!!adsVC getAds clouser pageNumber=\(self.pageNumber); limit=\(self.adsLimit)")
+            
         }
     }
     
     @IBAction func actionAdd(_ sender: Any) {
-        let addAdsVC = storyboard?.instantiateViewController(withIdentifier: "AddAdsNavController")
-        present(addAdsVC!, animated: true, completion: nil)
+        let navigationControllerAddAds = storyboard?.instantiateViewController(withIdentifier: "AddAdsNavController") as! UINavigationController
+        
+        let addAdsVC = navigationControllerAddAds.viewControllers.first as! AddAdsTableViewController
+        
+        addAdsVC.adsVC = self
+        
+        present(navigationControllerAddAds, animated: true, completion: nil)
     }
 }
 

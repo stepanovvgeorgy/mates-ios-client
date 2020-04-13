@@ -50,6 +50,8 @@ class AddAdsTableViewController: UITableViewController {
     
     let toolbar = UIToolbar(frame:CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
     
+    var adsVC: AdsViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -162,6 +164,9 @@ class AddAdsTableViewController: UITableViewController {
                                     
                                     let alert = UIAlertController(title: "Объявление опубликовано", message: nil, preferredStyle: .alert)
                                     let okButton = UIAlertAction(title: "Ок", style: .cancel) { (action) in
+                                        
+                                        self.adsVC?.getAds()
+                                        
                                         self.dismiss(animated: true, completion: nil)
                                     }
                                     
