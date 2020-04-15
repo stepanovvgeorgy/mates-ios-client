@@ -164,7 +164,7 @@ class NetworkManager {
         }
     }
     
-    func getAds(url: String, _ completion: @escaping (_ ads: [Ad]) -> ()) {
+    func getAds(url: String, _ completion: @escaping (_ ads: [Ad], _ total: String) -> ()) {
         let headersDict: [String: String] = [
             "Content-Type": "application/json",
             "token": UserDefaults.standard.value(forKey: "token") as! String
@@ -178,6 +178,8 @@ class NetworkManager {
             case .success(let dataJson):
                 
                 let data = JSON(dataJson)
+                                
+                let totalCount = response.response?.headers["total"]
                 
                 if !data.array!.isEmpty {
                     
@@ -204,13 +206,16 @@ class NetworkManager {
                                     previewImage: "\(self.uploadsUrl)/\(item["Images"][0]["name"].stringValue)",
                                     images: nil,
                                     userFirstName: item["User"]["first_name"].stringValue,
-                                    userAvatarString: "\(self.uploadsUrl)/\(item["User"]["avatar"].stringValue)")
+                                    userLastName: nil,
+                                    userAvatarString: "\(self.uploadsUrl)/\(item["User"]["avatar"].stringValue)",
+                                    userBDate: nil,
+                                    createdDate: nil)
                         
                         
                         adsArray.append(ad)
                     }
                     
-                    completion(adsArray)
+                    completion(adsArray, totalCount!)
                     
                 } else {
                     print("empty")
@@ -222,27 +227,54 @@ class NetworkManager {
         }
     }
     
-    func getFirstImageByAdID(_ id: Int, _ completion: @escaping (_ image: AdImage) -> ()) {
+    func getAdByID(_ id: Int, _ completion: @escaping (Ad) -> ()) {
+        
         let headersDict: [String: String] = [
             "Content-Type": "application/json",
             "token": UserDefaults.standard.value(forKey: "token") as! String
         ]
         
         let headers = HTTPHeaders(headersDict)
-        let url = URL(string: "\(serverUrl)/images/first/\(id)")
         
-        AF.request(url!, method: .get, headers: headers).validate().responseJSON { (response) in
+        guard let url = URL(string: "\(serverUrl)/ad/\(id)") else {return}
+        
+        AF.request(url, method: .get, headers: headers).validate().responseJSON { (response) in
             switch response.result {
-            case .success(let jsonImage):
-                let data = JSON(jsonImage)
+            case .success(let data):
                 
-                let image = AdImage(adID: data["AdId"].intValue, id: data["id"].intValue, name: data["name"].stringValue)
+                let item = JSON(data)
                 
-                completion(image)
+                let ad = Ad(id: item["id"].intValue,
+                            type: item["type"].intValue,
+                            subway: item["subway"].stringValue,
+                            timeToSubway: item["time_to_subway"].stringValue,
+                            street: item["street"].stringValue,
+                            numberOfHouse: item["number_of_house"].stringValue,
+                            housing: item["housing"].stringValue,
+                            numberOfRooms: item["number_of_rooms"].intValue,
+                            numberOfSalesRooms: item["number_of_sales_rooms"].intValue,
+                            genderMate: item["gender_mate"].intValue,
+                            timeToSale: item["time_to_sale"].intValue,
+                            animals: item["animals"].boolValue,
+                            price: item["price"].intValue,
+                            priceToTime: item["price_to_time"].intValue,
+                            infoText: item["info_text"].stringValue,
+                            userID: item["UserId"].intValue,
+                            previewImage: nil,
+                            images: nil,
+                            userFirstName: item["User"]["first_name"].stringValue,
+                            userLastName: item["User"]["last_name"].stringValue,
+                            userAvatarString: "\(self.uploadsUrl)/\(item["User"]["avatar"].stringValue)",
+                            userBDate: item["User"]["b_date"].stringValue,
+                            createdDate: item["createdAt"].stringValue)
+                
+                completion(ad)
                 
             case .failure(let error):
                 print(error.localizedDescription)
             }
         }
+
     }
+    
 }

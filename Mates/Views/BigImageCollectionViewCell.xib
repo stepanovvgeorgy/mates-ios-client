@@ -17,7 +17,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="237" height="211"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="test" translatesAutoresizingMaskIntoConstraints="NO" id="uSR-Ii-jIF">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="highway" translatesAutoresizingMaskIntoConstraints="NO" id="uSR-Ii-jIF">
                         <rect key="frame" x="0.0" y="0.0" width="237" height="211"/>
                     </imageView>
                 </subviews>
@@ -37,6 +37,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="test" width="1280" height="960"/>
+        <image name="highway" width="1920" height="1280"/>
     </resources>
 </document>

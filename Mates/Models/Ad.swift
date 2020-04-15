@@ -28,5 +28,8 @@ struct Ad {
     let previewImage: String?
     let images: [Any]?
     let userFirstName: String?
+    let userLastName: String?
     let userAvatarString: String?
+    let userBDate: String?
+    let createdDate: String?
 }

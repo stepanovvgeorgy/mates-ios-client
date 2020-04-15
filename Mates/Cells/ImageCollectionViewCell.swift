@@ -10,6 +10,5 @@ import UIKit
 
 class ImageCollectionViewCell: UICollectionViewCell {
     @IBOutlet var photoImageView: UIImageView!
-    
     @IBOutlet weak var removeButton: UIButton!    
 }

@@ -21,6 +21,7 @@ class AdsViewController: UIViewController {
     
     var pageNumber = 1
     let adsLimit = 5
+    var totalCount: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,8 +43,9 @@ class AdsViewController: UIViewController {
     
     func getAds() {
         print("adsVC getAds pageNumber=\(pageNumber); limit=\(adsLimit)")
-        NetworkManager.shared.getAds(url: "/ad/min?page=\(pageNumber)&limit=\(adsLimit)") { (ads) in
+        NetworkManager.shared.getAds(url: "/ad/min?page=\(pageNumber)&limit=\(adsLimit)") { (ads, total) in
             self.adsArray.append(contentsOf: ads)
+            self.totalCount = total
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
             print("adsArray.count = \(self.adsArray.count)")
@@ -115,17 +117,37 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let adVC = storyboard?.instantiateViewController(withIdentifier: "AdTableViewController")
+        let selectedAd = adsArray[indexPath.row]
         
-        navigationController?.pushViewController(adVC!, animated: true)
+        activityIndicator.startAnimating()
+        
+        NetworkManager.shared.getAdByID(selectedAd.id!) { (ad) in
+            
+            print(ad)
+            
+            let adVC = self.storyboard?.instantiateViewController(withIdentifier: "AdTableViewController") as! AdTableViewController
+            
+            adVC.ad = ad
+            
+            self.navigationController?.pushViewController(adVC, animated: true)
+            
+            self.activityIndicator.stopAnimating()
+            
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == adsArray.count - 1 {
-            pageNumber = pageNumber + 1
-            getAds()
+            if adsArray.count < Int(totalCount!)! {
+                pageNumber = pageNumber + 1
+                getAds()
+            } else {
+                print("All ads loaded")
+            }
         }
     }
 }

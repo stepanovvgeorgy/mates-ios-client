@@ -270,7 +270,9 @@ extension AddAdsTableViewController: UICollectionViewDelegate, UICollectionViewD
         cell.clipsToBounds = true
         
         cell.photoImageView.image = attachmentImages[indexPath.row]
+        
         cell.removeButton.tag = indexPath.row
+        
         cell.removeButton.addTarget(self, action: #selector(removeImage(_:)), for: .touchUpInside)
         
         return cell
