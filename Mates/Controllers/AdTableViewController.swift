@@ -184,7 +184,7 @@ extension AdTableViewController: UICollectionViewDataSource, UICollectionViewDel
         
         guard let imageUrl = URL(string: imageURLString) else {return cell}
 
-        cell.photoImageView.sd_setImage(with: imageUrl, placeholderImage: #imageLiteral(resourceName: "placeholder"), options: .fromCacheOnly)
+        cell.photoImageView.sd_setImage(with: imageUrl, placeholderImage: #imageLiteral(resourceName: "placeholder"), options: .scaleDownLargeImages)
         
         return cell
     }

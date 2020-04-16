@@ -94,7 +94,7 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
         
         guard let avatarUrl = URL(string: ad.userAvatarString!) else {return cell}
         
-        cell.avatarImageView.sd_setImage(with: avatarUrl, placeholderImage: #imageLiteral(resourceName: "user-circle"), options: .fromCacheOnly)
+        cell.avatarImageView.sd_setImage(with: avatarUrl, placeholderImage: #imageLiteral(resourceName: "user-circle"), options: .scaleDownLargeImages)
         
         cell.firstNameLabel.text = ad.userFirstName
                 
