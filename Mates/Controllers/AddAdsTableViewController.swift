@@ -157,7 +157,7 @@ class AddAdsTableViewController: UITableViewController {
                     var countImages = self.attachmentImages.count
                     
                     for image in self.attachmentImages {
-                        NetworkManager.shared.uploadImage(url: "/images/upload", image, adID: "\(adID)") {
+                        NetworkManager.shared.uploadImage(url: "/images/upload", image, adID: "\(adID)", resize: nil) {
                             countImages = countImages - 1
                             if countImages == 0 {
                                 activityAlert.dismiss(animated: true) {
@@ -344,7 +344,7 @@ extension AddAdsTableViewController: UIImagePickerControllerDelegate, UINavigati
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+        let image = info[UIImagePickerController.InfoKey.editedImage] as! UIImage
         
         attachmentImages.append(image)
         

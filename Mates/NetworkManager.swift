@@ -133,8 +133,11 @@ class NetworkManager {
         }
     }
     
-    func uploadImage(url: String, _ image: UIImage, adID: String?, _ completion: @escaping () -> ()) {
-        guard let imageData = image.jpegData(compressionQuality: 0.1) else {return}
+    func uploadImage(url: String, _ image: UIImage, adID: String?, resize: CGSize?, _ completion: @escaping () -> ()) {
+        
+        let croppedImage = Helper.shared.resizeImage(image: image, targetSize: resize ?? CGSize(width: 320, height: 240))
+        
+        guard let imageData = croppedImage.jpegData(compressionQuality: 0.9) else {return}
         
         AF.upload(multipartFormData: { (form) in
             form.append(imageData, withName: "file_data", fileName: "\(Helper.shared.randomString(length: 7)).jpg", mimeType: "image/jpeg")

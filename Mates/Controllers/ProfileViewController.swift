@@ -72,8 +72,8 @@ class ProfileViewController: UIViewController {
 
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
-        NetworkManager.shared.uploadImage(url: "/images/avatar", image, adID: nil) {
+        let image = info[UIImagePickerController.InfoKey.editedImage] as! UIImage
+        NetworkManager.shared.uploadImage(url: "/images/avatar", image, adID: nil, resize: CGSize(width: 120, height: 120)) {
             self.tableView.reloadData()
             self.imageFromPicker = image
             picker.dismiss(animated: true)

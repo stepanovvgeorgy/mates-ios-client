@@ -90,33 +90,17 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
         
         guard let imageUrl = URL(string: ad.previewImage!) else {return cell}
     
-        cell.sd_imageIndicator = SDWebImageActivityIndicator.gray
-        cell.sd_imageIndicator?.startAnimatingIndicator()
-        
-        cell.photoImageView.sd_setImage(with: imageUrl, placeholderImage: #imageLiteral(resourceName: "placeholder"), options: .delayPlaceholder) { (image, error, cache, url) in
-            if error != nil {
-                print(error!.localizedDescription)
-            } else {
-                cell.photoImageView.image = image
-                cell.sd_imageIndicator?.stopAnimatingIndicator()
-            }
-        }
+        cell.photoImageView.sd_setImage(with: imageUrl, placeholderImage: #imageLiteral(resourceName: "placeholder"), options: .fromCacheOnly, completed: nil)
         
         guard let avatarUrl = URL(string: ad.userAvatarString!) else {return cell}
         
-        cell.avatarImageView.sd_setImage(with: avatarUrl, placeholderImage: #imageLiteral(resourceName: "user-circle"), options: .delayPlaceholder) { (image, error, cache, url) in
-            if error != nil {
-                cell.avatarImageView.image = image
-            } else {
-                print(error?.localizedDescription as Any)
-            }
-        }
+        cell.avatarImageView.sd_setImage(with: avatarUrl, placeholderImage: #imageLiteral(resourceName: "user-circle"), options: .fromCacheOnly)
         
         cell.firstNameLabel.text = ad.userFirstName
                 
         return cell
     }
-    
+        
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.deselectRow(at: indexPath, animated: true)
