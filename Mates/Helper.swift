@@ -28,6 +28,12 @@ class Helper {
         }
     }
     
+    func logout(_ completion: @escaping () -> ()) {
+        UserDefaults.standard.removeObject(forKey: "token")
+        UserDefaults.standard.removeObject(forKey: "user_id")
+        completion()
+    }
+    
     func styledNavigationBar(navigationController: UINavigationController?, backgroundColor: UIColor?, textColor: UIColor?, isTranslucent: Bool?) {
         navigationController?.navigationBar.barTintColor = backgroundColor ?? UIColor.black
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: textColor ?? UIColor.white]
@@ -98,4 +104,6 @@ class Helper {
         let decodedimage = UIImage(data: dataDecoded)
         return decodedimage!
     }
+    
+
 }

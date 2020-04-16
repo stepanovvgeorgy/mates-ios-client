@@ -26,13 +26,11 @@ class AdTableViewController: UITableViewController {
     @IBOutlet weak var threeRoomsImageView: UIImageView!
     @IBOutlet weak var fourRoomsImageView: UIImageView!
     @IBOutlet weak var fiveRoomsImageView: UIImageView!
-    @IBOutlet weak var plusImageView: UIImageView!
     @IBOutlet weak var oneRoomSaleImageView: UIImageView!
     @IBOutlet weak var twoRoomsSaleImageView: UIImageView!
     @IBOutlet weak var threeRoomsSaleImageView: UIImageView!
     @IBOutlet weak var fourRoomsSaleImageView: UIImageView!
     @IBOutlet weak var fiveRoomsSaleImageView: UIImageView!
-    @IBOutlet weak var plusSaleImageView: UIImageView!
     @IBOutlet weak var mateGenderImageView: UIImageView!
     @IBOutlet weak var animalsImageView: UIImageView!
     @IBOutlet weak var timeToSaleLabel: UILabel!
@@ -40,10 +38,15 @@ class AdTableViewController: UITableViewController {
     @IBOutlet weak var priceToSaleLabel: UILabel!
     @IBOutlet weak var infoTextLabel: UILabel!
     @IBOutlet weak var walkImageView: UIImageView!
+    @IBOutlet weak var cImageView: UIImageView!
+    @IBOutlet weak var cSaleImageView: UIImageView!
+    @IBOutlet weak var animalsLabel: UILabel!
+    @IBOutlet weak var currentImageNumberLabel: UILabel!
+    @IBOutlet weak var countImagesLabel: UILabel!
     
     var ad: Ad?
     
-    var adImages: [UIImage] = Array()
+    var adImages: [String] = Array()
     let imageCellID = "ImageCell"
     
     override func viewDidLoad() {
@@ -55,15 +58,20 @@ class AdTableViewController: UITableViewController {
         
         avatarImageView.layer.cornerRadius = 25
         avatarImageView.clipsToBounds = true
-        
+                
         setDataFromAd(ad: ad)
     }
     
     func setDataFromAd(ad: Ad?) {
+                
         guard let adObj = ad else {return}
         
         dateLabel.text = adObj.createdDate
         nameLabel.text = "\(adObj.userFirstName ?? "") \(adObj.userLastName ?? "")"
+        
+        adImages = adObj.images!
+        
+        countImagesLabel.text = "\(adObj.images?.count ?? 0)"
         
         guard let avatarUrl = URL(string: adObj.userAvatarString ?? "") else {return}
 
@@ -100,6 +108,41 @@ class AdTableViewController: UITableViewController {
             animalsImageView.image = #imageLiteral(resourceName: "dog")
         } else {
             animalsImageView.image = #imageLiteral(resourceName: "no_animals")
+            animalsLabel.text = "Без животных"
+        }
+        
+        switch adObj.numberOfRooms {
+        case 0:
+            cImageView.image = #imageLiteral(resourceName: "c-green")
+        case 1:
+            oneRoomImageView.image = #imageLiteral(resourceName: "one-green")
+        case 2:
+            twoRoomsImageView.image = #imageLiteral(resourceName: "two-green")
+        case 3:
+            threeRoomsImageView.image = #imageLiteral(resourceName: "three-green")
+        case 4:
+            fourRoomsImageView.image = #imageLiteral(resourceName: "four-green")
+        case 5:
+            fiveRoomsImageView.image = #imageLiteral(resourceName: "five-green")
+        default:
+            break
+        }
+        
+        switch adObj.numberOfSalesRooms {
+        case 0:
+            cSaleImageView.image = #imageLiteral(resourceName: "c-green")
+        case 1:
+            oneRoomSaleImageView.image = #imageLiteral(resourceName: "one-green")
+        case 2:
+            twoRoomsSaleImageView.image = #imageLiteral(resourceName: "two-green")
+        case 3:
+            threeRoomsSaleImageView.image = #imageLiteral(resourceName: "three-green")
+        case 4:
+            fourRoomsSaleImageView.image = #imageLiteral(resourceName: "four-green")
+        case 5:
+            fiveRoomsSaleImageView.image = #imageLiteral(resourceName: "five-green")
+        default:
+            break
         }
         
         priceLabel.text = String(adObj.price!)
@@ -109,19 +152,51 @@ class AdTableViewController: UITableViewController {
     }
 
     @IBAction func connectAction(_ sender: UIButton) {
-        
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let callAction = UIAlertAction(title: "Позвонить", style: .default) { (action) in
+            print("call")
+        }
+        let msgAction = UIAlertAction(title: "Написать личное сообщение", style: .default) { (action) in
+            print("msg")
+        }
+        let cancelAction = UIAlertAction(title: "Отмена", style: .default) { (action) in
+            print("cancel")
+        }
+        actionSheet.addAction(callAction)
+        actionSheet.addAction(msgAction)
+        actionSheet.addAction(cancelAction)
+        present(actionSheet, animated: true) {
+            
+        }
     }
 }
 
 extension AdTableViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return adImages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageCellID, for: indexPath) as! BigImageCollectionViewCell
+        
+        let imageURLString = adImages[indexPath.row]
+        
+        guard let imageUrl = URL(string: imageURLString) else {return cell}
+
+        cell.photoImageView.sd_setImage(with: imageUrl, placeholderImage: #imageLiteral(resourceName: "placeholder"), options: .delayPlaceholder) { (image, error, cache, url) in
+            if error != nil {
+                cell.photoImageView.image = image
+            } else {
+                print(error?.localizedDescription as Any)
+            }
+        }
+        
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        currentImageNumberLabel.text = "\(indexPath.row + 1)"
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

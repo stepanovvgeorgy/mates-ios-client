@@ -21,13 +21,27 @@ class NetworkManager {
         return instance
     }()
     
-    func signUp(urlString: String, user: User, _ completion: @escaping (_ data: [String: Any]) -> ()) {
+    func headers() -> HTTPHeaders {
+        let headersDict: [String: String] = ["Content-Type": "application/json"]
+        let headers = HTTPHeaders(headersDict)
+        return headers
+    }
+    
+    func headersWithToken() -> HTTPHeaders {
+        
+        let headersDict: [String: String] = [
+            "Content-Type": "application/json",
+            "token": UserDefaults.standard.value(forKey: "token") as! String
+        ]
+        
+        let headers = HTTPHeaders(headersDict)
+        
+        return headers
+    }
+    
+    func signUp(urlString: String, user: User, _ completion: @escaping (_ data: [String: Any]) -> (), failure: @escaping (_ error: [String: String]) -> ()) {
         
         guard let url = URL(string: "\(serverUrl)\(urlString)") else { return }
-        
-        let headers: [String: String] = ["Content-Type": "application/json"]
-        
-        let httpHeaders = HTTPHeaders(headers)
         
         let userData: [String: Any] = [
             "first_name": user.first_name!,
@@ -43,10 +57,16 @@ class NetworkManager {
                    method: .post,
                    parameters: userData,
                    encoding: JSONEncoding.default,
-                   headers: httpHeaders).validate().responseJSON { (response) in
+                   headers: headers()).validate().responseJSON { (response) in
                     switch response.result {
                     case .success(let value):
-                        completion(value as! [String: Any])
+                        
+                        if response.response?.statusCode == 201 {
+                            completion(value as! [String: Any])
+                        } else {
+                            failure(value as! [String: String])
+                        }
+                        
                     case .failure(let error):
                         print(error.localizedDescription)
                     }
@@ -54,14 +74,10 @@ class NetworkManager {
         
     }
     
-    func signIn(urlString: String, email: String?, password: String?, _ completion: @escaping (_ data: [String: Any]) -> () ) {
+    func signIn(urlString: String, email: String?, password: String?, completion: @escaping (_ data: [String: Any]) -> (), failure: @escaping (_ error: [String: String]) -> () ) {
         
         // Создаем URL на основе urlString - строки
         guard let url = URL(string: "\(serverUrl)\(urlString)") else { return }
-        
-        let headers: [String: String] = ["Content-Type": "application/json"]
-        
-        let httpHeaders = HTTPHeaders(headers)
         
         // создаем Dictionary, которое будем отправлять на сервер
         let userData: [String: String] = [
@@ -74,29 +90,26 @@ class NetworkManager {
                    method: HTTPMethod.post,
                    parameters: userData,
                    encoding: JSONEncoding.default,
-                   headers: httpHeaders).validate().responseJSON { (response) in
+                   headers: headers()).validate().responseJSON { (response) in
+                    
                     switch response.result {
                     case .success(let value):
-                        completion(value as! [String: Any])
+                        if response.response?.statusCode == 202 {
+                            completion(value as! [String: Any])
+                        } else {
+                            failure(value as! [String: String])
+                        }
                     case .failure(let error):
                         print(error.localizedDescription)
                     }
+                    
         }
     }
     
     func getUserById(_ id: Int, _ completion: @escaping (_ user: User) -> ()) {
         guard let url = URL(string: "\(serverUrl)/user/\(id)") else { return }
         
-        let token = UserDefaults.standard.value(forKey: "token") as! String
-        
-        let headers: [String: String] = [
-            "Content-Type": "application/json",
-            "token": token
-        ]
-        
-        let httpHeaders = HTTPHeaders(headers)
-        
-        AF.request(url, method: .get, headers: httpHeaders).validate().responseJSON { (response) in
+        AF.request(url, method: .get, headers: headersWithToken()).validate().responseJSON { (response) in
             
             switch response.result {
             case .success(let value):
@@ -141,20 +154,13 @@ class NetworkManager {
     
     
     func sendAd(data: [String: Any], _ completion: @escaping (_ adID: Int) -> ()) {
-        let headersDict: [String: String] = [
-            "Content-Type": "application/json",
-            "token": UserDefaults.standard.value(forKey: "token") as! String
-        ]
-        
-        let headers = HTTPHeaders(headersDict)
-        
         let url = URL(string: "\(serverUrl)/ad/add")
         
         AF.request(url!,
                    method: .post,
                    parameters: data,
                    encoding: JSONEncoding.default,
-                   headers: headers).validate().responseJSON { (response) in
+                   headers: headersWithToken()).validate().responseJSON { (response) in
                     switch response.result {
                     case .success(let adID):
                         completion(adID as! Int)
@@ -165,15 +171,10 @@ class NetworkManager {
     }
     
     func getAds(url: String, _ completion: @escaping (_ ads: [Ad], _ total: String) -> ()) {
-        let headersDict: [String: String] = [
-            "Content-Type": "application/json",
-            "token": UserDefaults.standard.value(forKey: "token") as! String
-        ]
-        
-        let headers = HTTPHeaders(headersDict)
+
         let url = URL(string: "\(serverUrl)\(url)")
         
-        AF.request(url!, method: .get, headers: headers).validate().responseJSON { (response) in
+        AF.request(url!, method: .get, headers: headersWithToken()).validate().responseJSON { (response) in
             switch response.result {
             case .success(let dataJson):
                 
@@ -229,21 +230,23 @@ class NetworkManager {
     
     func getAdByID(_ id: Int, _ completion: @escaping (Ad) -> ()) {
         
-        let headersDict: [String: String] = [
-            "Content-Type": "application/json",
-            "token": UserDefaults.standard.value(forKey: "token") as! String
-        ]
-        
-        let headers = HTTPHeaders(headersDict)
-        
         guard let url = URL(string: "\(serverUrl)/ad/\(id)") else {return}
         
-        AF.request(url, method: .get, headers: headers).validate().responseJSON { (response) in
+        AF.request(url, method: .get, headers: headersWithToken()).validate().responseJSON { (response) in
             switch response.result {
             case .success(let data):
                 
                 let item = JSON(data)
                 
+                let images = JSON(item["Images"])
+                
+                var imagesUrls = Array<String>()
+                
+                images.array!.forEach({ (item) in
+                    let imageUrlString = "\(self.uploadsUrl)/\(item["name"].stringValue)"
+                    imagesUrls.append(imageUrlString)
+                })
+                                    
                 let ad = Ad(id: item["id"].intValue,
                             type: item["type"].intValue,
                             subway: item["subway"].stringValue,
@@ -261,7 +264,7 @@ class NetworkManager {
                             infoText: item["info_text"].stringValue,
                             userID: item["UserId"].intValue,
                             previewImage: nil,
-                            images: nil,
+                            images: imagesUrls,
                             userFirstName: item["User"]["first_name"].stringValue,
                             userLastName: item["User"]["last_name"].stringValue,
                             userAvatarString: "\(self.uploadsUrl)/\(item["User"]["avatar"].stringValue)",

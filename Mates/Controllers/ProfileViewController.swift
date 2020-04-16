@@ -18,6 +18,8 @@ class ProfileViewController: UIViewController {
         
     var user: User?
     
+    var imageFromPicker: UIImage?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
@@ -43,6 +45,29 @@ class ProfileViewController: UIViewController {
             self.tableView.isHidden = false
         }
     }
+    
+    @IBAction func actionLogout(_ sender: UIBarButtonItem) {
+        
+        let alert = UIAlertController(title: "Выход", message: "Выйти из аккаунта?", preferredStyle: .alert)
+        
+        let yesAction = UIAlertAction(title: "Да", style: .default) { (action) in
+            Helper.shared.logout {
+                let signInVC = self.storyboard?.instantiateViewController(withIdentifier: "SignInVC")
+                let innerTabBar = self.storyboard?.instantiateViewController(withIdentifier: "InnerTabBarController")
+                signInVC?.modalPresentationStyle = .fullScreen
+                self.present(signInVC!, animated: true) {
+                    innerTabBar?.dismiss(animated: false, completion: nil)
+                }
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "Нет", style: .cancel, handler: nil)
+        
+        alert.addAction(yesAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true, completion: nil)
+    }
 }
 
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -50,6 +75,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
         NetworkManager.shared.uploadImage(url: "/images/avatar", image, adID: nil) {
             self.tableView.reloadData()
+            self.imageFromPicker = image
             picker.dismiss(animated: true)
         }
     }
@@ -69,9 +95,11 @@ extension ProfileViewController: UITableViewDataSource {
         if section == 1 {
             return 4
         }
+        
         if section == 2 {
             return 2
         }
+        
         return 0
     }
     
@@ -85,25 +113,35 @@ extension ProfileViewController: UITableViewDataSource {
             cell.detailTextLabel!.text = user?.first_name
             
         } else if indexPath.section == 1 && indexPath.row == 1 {
+            
             cell.textLabel!.text = "Фамилия"
             cell.detailTextLabel!.text = user?.last_name
+            
         } else if indexPath.section == 1 && indexPath.row == 2 {
             cell.textLabel!.text = "Дата рождения"
             cell.detailTextLabel!.text = user?.b_date
+            
         } else if indexPath.section == 1 && indexPath.row == 3 {
+            
             cell.textLabel!.text = "Пол"
             if user?.gender == 0 {
                 cell.detailTextLabel!.text = "Жен."
             } else {
                 cell.detailTextLabel!.text = "Муж."
             }
+            
         } else if indexPath.section == 2 && indexPath.row == 0 {
+            
             cell.textLabel!.text = "Email"
             cell.detailTextLabel!.text = user?.email
+            
         } else if indexPath.section == 2 && indexPath.row == 1 {
+            
             cell.textLabel!.text = "Телефон"
             cell.detailTextLabel!.text = user?.phone
+            
         }
+
         
         return cell
     }
@@ -122,12 +160,18 @@ extension ProfileViewController: UITableViewDelegate {
                         
             guard let avatarUrl = URL(string: user?.avatar ?? "") else {return view}
 
-            view.avatarImageView.sd_setImage(with: avatarUrl, placeholderImage: #imageLiteral(resourceName: "user-circle"), options: .delayPlaceholder) { (image, error, cache, url) in
-                if error == nil {
-                    view.avatarImageView.image = image
-                } else {
-                    print(error?.localizedDescription as Any)
+            if imageFromPicker == nil {
+                
+                view.avatarImageView.sd_setImage(with: avatarUrl, placeholderImage: #imageLiteral(resourceName: "user-circle"), options: .delayPlaceholder) { (image, error, cache, url) in
+                    if error == nil {
+                        view.avatarImageView.image = image
+                    } else {
+                        print(error?.localizedDescription as Any)
+                    }
                 }
+                
+            } else {
+                view.avatarImageView.image = imageFromPicker
             }
 
             

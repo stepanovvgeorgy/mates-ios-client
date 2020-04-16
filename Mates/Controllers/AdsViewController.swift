@@ -92,7 +92,8 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
     
         cell.sd_imageIndicator = SDWebImageActivityIndicator.gray
         cell.sd_imageIndicator?.startAnimatingIndicator()
-        cell.photoImageView.sd_setImage(with: imageUrl) { (image, error, cache, url) in
+        
+        cell.photoImageView.sd_setImage(with: imageUrl, placeholderImage: #imageLiteral(resourceName: "placeholder"), options: .delayPlaceholder) { (image, error, cache, url) in
             if error != nil {
                 print(error!.localizedDescription)
             } else {
@@ -125,9 +126,7 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
         activityIndicator.startAnimating()
         
         NetworkManager.shared.getAdByID(selectedAd.id!) { (ad) in
-            
-            print(ad)
-            
+                        
             let adVC = self.storyboard?.instantiateViewController(withIdentifier: "AdTableViewController") as! AdTableViewController
             
             adVC.ad = ad
@@ -137,7 +136,6 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
             self.activityIndicator.stopAnimating()
             
         }
-        
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

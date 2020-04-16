@@ -26,7 +26,7 @@ struct Ad {
     let infoText: String?
     let userID: Int?
     let previewImage: String?
-    let images: [Any]?
+    let images: [String]?
     let userFirstName: String?
     let userLastName: String?
     let userAvatarString: String?

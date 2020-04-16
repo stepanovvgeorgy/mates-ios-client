@@ -64,6 +64,12 @@ class SignUpTableViewController: UITableViewController {
         
         genderSegmentControl.tintColor = #colorLiteral(red: 1, green: 0.320400238, blue: 0.3293212056, alpha: 1)
         
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func hideKeyboard() {
+        view.endEditing(true)
     }
     
     @objc func bDateNextField(_ sender: UIBarButtonItem) {
@@ -110,19 +116,25 @@ class SignUpTableViewController: UITableViewController {
                                 password: passwordTextField.text!,
                                 avatar: nil)
                 
-                NetworkManager.shared.signUp(urlString: "/user/signup", user: user) { (data) in
+                NetworkManager.shared.signUp(urlString: "/user/sign-up", user: user, { (data) in
                     
-                    let jsonData = JSON(data)
+                       let jsonData = JSON(data)
+                       
+                       UserDefaults.standard.set(jsonData["token"].stringValue, forKey: "token")
+                       UserDefaults.standard.set(jsonData["user_id"].intValue, forKey: "user_id")
                     
-                    UserDefaults.standard.set(jsonData["token"].stringValue, forKey: "token")
-                    UserDefaults.standard.set(jsonData["user_id"].intValue, forKey: "user_id")
-                 
-                    let innerVC = self.storyboard?.instantiateViewController(withIdentifier: "InnerTabBarController")
+                       let innerVC = self.storyboard?.instantiateViewController(withIdentifier: "InnerTabBarController")
+                       
+                       innerVC?.modalPresentationStyle = .fullScreen
+                       
+                       self.present(innerVC!, animated: true, completion: nil)
                     
-                    innerVC?.modalPresentationStyle = .fullScreen
+                }) { (errors) in
+                    let jsonErrors = JSON(errors)
                     
-                    self.present(innerVC!, animated: true, completion: nil)
+                    let infoAlert = Helper.shared.showInfoAlert(title: "Ошибка", message: jsonErrors["error"].stringValue)
                     
+                    self.present(infoAlert!, animated: true, completion: nil)
                 }
             }
         } else {

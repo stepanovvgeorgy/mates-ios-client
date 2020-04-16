@@ -19,7 +19,6 @@ class SignInViewController: UIViewController {
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var bannerHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var waveImageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +26,7 @@ class SignInViewController: UIViewController {
         
         activityIndicator.stopAnimating()
         
-        signInButton.layer.cornerRadius = 25
+        signInButton.layer.cornerRadius = 22
         
         signUpButton.layer.cornerRadius = 20
         signUpButton.layer.borderWidth = 1.5
@@ -59,7 +58,7 @@ class SignInViewController: UIViewController {
                        delay: 0,
                        options: .curveEaseInOut,
                        animations: {
-                        self.bannerHeightConstraint.constant = 100
+                        self.bannerHeightConstraint.constant = 90
                         self.view.layoutIfNeeded()
         }, completion: nil)
     }
@@ -69,7 +68,7 @@ class SignInViewController: UIViewController {
                        delay: 0,
                        options: .curveEaseInOut,
                        animations: {
-                        self.bannerHeightConstraint.constant = 220
+                        self.bannerHeightConstraint.constant = 135
                         self.view.layoutIfNeeded()
         }, completion: nil)
     }
@@ -81,31 +80,38 @@ class SignInViewController: UIViewController {
     func signIn() {
         
         if (emailTextField.text != "" && passwordTextField.text != "") {
+            
             activityIndicator.startAnimating()
             
+            NetworkManager.shared.signIn(urlString: "/user/sign-in", email: emailTextField.text, password: passwordTextField.text, completion: { (data) in
+                
+                let jsonData = JSON(data)
+                
+                UserDefaults.standard.set(jsonData["token"].stringValue, forKey: "token")
+                UserDefaults.standard.set(jsonData["user_id"].intValue, forKey: "user_id")
+                
+                let innerVC = self.storyboard?.instantiateViewController(withIdentifier: "InnerTabBarController")
+                
+                self.activityIndicator.stopAnimating()
+                
+                innerVC?.modalPresentationStyle = .fullScreen
+                
+                self.present(innerVC!, animated: true, completion: nil)
+                
+            }, failure: { (errors) in
+                
+                self.activityIndicator.stopAnimating()
+                
+                let jsonErrors = JSON(errors)
+                
+                let infoAlert = Helper.shared.showInfoAlert(title: "Ошибка", message: jsonErrors["error"].stringValue)
+                
+                self.present(infoAlert!, animated: true, completion: nil)
+            })
             
-            NetworkManager.shared.signIn(urlString: "/user/signin",
-                                  email: emailTextField.text,
-                                  password: passwordTextField.text) { (data) in
-                                    
-                                    
-                                    let jsonData = JSON(data)
-                                    
-                                    UserDefaults.standard.set(jsonData["token"].stringValue, forKey: "token")
-                                    UserDefaults.standard.set(jsonData["user_id"].intValue, forKey: "user_id")
-                                    
-                                    self.activityIndicator.stopAnimating()
-                                    
-                                    let innerVC = self.storyboard?.instantiateViewController(withIdentifier: "InnerTabBarController")
-                                    
-                                    innerVC?.modalPresentationStyle = .fullScreen
-                                    
-                                    self.present(innerVC!, animated: true, completion: nil)
-            }
-        } else {
             
         }
-    
+        
     }
     
     // MARK: - ACTIONS -
