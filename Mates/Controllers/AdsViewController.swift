@@ -33,10 +33,10 @@ class AdsViewController: UIViewController {
         
         refreshControl.addTarget(self, action: #selector(refresh(_:)), for: UIControl.Event.valueChanged)
         tableView.addSubview(refreshControl)
-                
+        
         getAds()
     }
-    
+        
     @objc func refresh(_ sender: AnyObject) {
         refreshControl.endRefreshing()
     }
@@ -64,6 +64,7 @@ class AdsViewController: UIViewController {
         present(navigationControllerAddAds, animated: true, completion: nil)
     }
 }
+
 
 extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
     
