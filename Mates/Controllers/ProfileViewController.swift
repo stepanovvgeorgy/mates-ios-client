@@ -18,7 +18,11 @@ class ProfileViewController: UIViewController {
         
     var user: User?
     
-    var imageFromPicker: UIImage?
+    var imageFromPicker: UIImage? {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,7 +78,6 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let image = info[UIImagePickerController.InfoKey.editedImage] as! UIImage
         NetworkManager.shared.uploadImage(url: "/images/avatar", image, adID: nil, resize: CGSize(width: 120, height: 120)) {
-            self.tableView.reloadData()
             self.imageFromPicker = image
             picker.dismiss(animated: true)
         }
@@ -197,7 +200,7 @@ extension ProfileViewController: UITableViewDelegate {
         }
         
         let cancel = UIAlertAction(title: "Отмена", style: .cancel) { (action) in
-            self.dismiss(animated: true, completion: nil)
+            actionSheet.dismiss(animated: true, completion: nil)
         }
         
         actionSheet.addAction(showPicker)

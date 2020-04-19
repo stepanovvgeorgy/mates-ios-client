@@ -95,8 +95,8 @@ class SignInViewController: UIViewController {
                 self.activityIndicator.stopAnimating()
                 
                 innerVC?.modalPresentationStyle = .fullScreen
-                
-                self.present(innerVC!, animated: true, completion: nil)
+                                
+                self.present(innerVC!, animated: true)
                 
             }, failure: { (errors) in
                 

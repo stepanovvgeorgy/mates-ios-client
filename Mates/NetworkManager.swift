@@ -9,7 +9,6 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
-import SDWebImage
 
 class NetworkManager {
     
@@ -21,23 +20,27 @@ class NetworkManager {
         return instance
     }()
     
-    func headers() -> HTTPHeaders {
-        let headersDict: [String: String] = ["Content-Type": "application/json"]
-        let headers = HTTPHeaders(headersDict)
-        return headers
+    var headers: HTTPHeaders {
+        get {
+            let headersDict: [String: String] = ["Content-Type": "application/json"]
+            let headers = HTTPHeaders(headersDict)
+            return headers
+        }
     }
     
-    func headersWithToken() -> HTTPHeaders {
-        
-        let headersDict: [String: String] = [
-            "Content-Type": "application/json",
-            "token": UserDefaults.standard.value(forKey: "token") as! String
-        ]
-        
-        let headers = HTTPHeaders(headersDict)
-        
-        return headers
+    var headersWithToken: HTTPHeaders {
+        get {
+            let headersDict: [String: String] = [
+                "Content-Type": "application/json",
+                "token": UserDefaults.standard.value(forKey: "token") as! String
+            ]
+            
+            let headers = HTTPHeaders(headersDict)
+            
+            return headers
+        }
     }
+    
     
     func signUp(urlString: String, user: User, _ completion: @escaping (_ data: [String: Any]) -> (), failure: @escaping (_ error: [String: String]) -> ()) {
         
@@ -57,7 +60,7 @@ class NetworkManager {
                    method: .post,
                    parameters: userData,
                    encoding: JSONEncoding.default,
-                   headers: headers()).validate().responseJSON { (response) in
+                   headers: headers).validate().responseJSON { (response) in
                     switch response.result {
                     case .success(let value):
                         
@@ -90,7 +93,7 @@ class NetworkManager {
                    method: HTTPMethod.post,
                    parameters: userData,
                    encoding: JSONEncoding.default,
-                   headers: headers()).validate().responseJSON { (response) in
+                   headers: headers).validate().responseJSON { (response) in
                     
                     switch response.result {
                     case .success(let value):
@@ -109,7 +112,7 @@ class NetworkManager {
     func getUserById(_ id: Int, _ completion: @escaping (_ user: User) -> ()) {
         guard let url = URL(string: "\(serverUrl)/user/\(id)") else { return }
         
-        AF.request(url, method: .get, headers: headersWithToken()).validate().responseJSON { (response) in
+        AF.request(url, method: .get, headers: headersWithToken).validate().responseJSON { (response) in
             
             switch response.result {
             case .success(let value):
@@ -163,7 +166,7 @@ class NetworkManager {
                    method: .post,
                    parameters: data,
                    encoding: JSONEncoding.default,
-                   headers: headersWithToken()).validate().responseJSON { (response) in
+                   headers: headersWithToken).validate().responseJSON { (response) in
                     switch response.result {
                     case .success(let adID):
                         completion(adID as! Int)
@@ -177,7 +180,7 @@ class NetworkManager {
 
         let url = URL(string: "\(serverUrl)\(url)")
         
-        AF.request(url!, method: .get, headers: headersWithToken()).validate().responseJSON { (response) in
+        AF.request(url!, method: .get, headers: headersWithToken).validate().responseJSON { (response) in
             switch response.result {
             case .success(let dataJson):
                 
@@ -235,7 +238,7 @@ class NetworkManager {
         
         guard let url = URL(string: "\(serverUrl)/ad/\(id)") else {return}
         
-        AF.request(url, method: .get, headers: headersWithToken()).validate().responseJSON { (response) in
+        AF.request(url, method: .get, headers: headersWithToken).validate().responseJSON { (response) in
             switch response.result {
             case .success(let data):
                 
@@ -281,6 +284,34 @@ class NetworkManager {
             }
         }
 
+    }
+    
+    func sendReview(toUserID: Int, review: Review, completion: @escaping () -> ()) {
+        
+        guard let url = URL(string: "\(serverUrl)/review/add/\(toUserID)") else {return}
+                
+        let parameters: [String : Any] = [
+            "text": review.text!,
+            "star": review.star!,
+            "result": review.result!
+        ]
+        
+        AF.request(url,
+                   method: .post,
+                   parameters: parameters,
+                   encoding: JSONEncoding.default,
+                   headers: headersWithToken).validate().responseJSON { (response) in
+            switch response.result {
+            case .success(let value):
+                if response.response?.statusCode == 201 {
+                    print(value)
+                    completion()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
     }
     
 }

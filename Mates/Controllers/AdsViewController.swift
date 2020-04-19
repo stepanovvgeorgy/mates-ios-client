@@ -90,8 +90,8 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
         cell.priceLabel.text = "\(ad.price!) \(time)"
         
         guard let imageUrl = URL(string: ad.previewImage!) else {return cell}
-    
-        cell.photoImageView.sd_setImage(with: imageUrl, placeholderImage: #imageLiteral(resourceName: "placeholder"), options: .fromCacheOnly, completed: nil)
+        
+        cell.photoImageView.sd_setImage(with: imageUrl, placeholderImage: #imageLiteral(resourceName: "placeholder"), options: .highPriority, completed: nil)
         
         guard let avatarUrl = URL(string: ad.userAvatarString!) else {return cell}
         
@@ -108,19 +108,12 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
         
         let selectedAd = adsArray[indexPath.row]
         
-        activityIndicator.startAnimating()
+        let adVC = self.storyboard?.instantiateViewController(withIdentifier: "AdTableViewController") as! AdTableViewController
         
-        NetworkManager.shared.getAdByID(selectedAd.id!) { (ad) in
-                        
-            let adVC = self.storyboard?.instantiateViewController(withIdentifier: "AdTableViewController") as! AdTableViewController
-            
-            adVC.ad = ad
-            
-            self.navigationController?.pushViewController(adVC, animated: true)
-            
-            self.activityIndicator.stopAnimating()
-            
-        }
+        adVC.getAdByID(selectedAd.id)
+        
+        self.navigationController?.pushViewController(adVC, animated: true)
+
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

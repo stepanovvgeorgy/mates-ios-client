@@ -24,6 +24,10 @@
 		D3B01EC02439EA3400F1772B /* AdTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B01EBF2439EA3400F1772B /* AdTableViewController.swift */; };
 		D3B01EC32439EE3B00F1772B /* BigImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B01EC12439EE3B00F1772B /* BigImageCollectionViewCell.swift */; };
 		D3B01EC42439EE3B00F1772B /* BigImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3B01EC22439EE3B00F1772B /* BigImageCollectionViewCell.xib */; };
+		D3BC98E2244B48EC000433B2 /* ReviewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC98E1244B48EC000433B2 /* ReviewsViewController.swift */; };
+		D3BC98E4244B4C20000433B2 /* ReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC98E3244B4C20000433B2 /* ReviewTableViewCell.swift */; };
+		D3BC98E6244B60F2000433B2 /* AddReviewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC98E5244B60F2000433B2 /* AddReviewTableViewController.swift */; };
+		D3BC98EA244BC7AD000433B2 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC98E9244BC7AD000433B2 /* Review.swift */; };
 		D3D86BC8243673EA00DBA3D0 /* AddAdsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D86BC7243673EA00DBA3D0 /* AddAdsTableViewController.swift */; };
 		D3E59997243537CD00D2CF34 /* AdsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E59996243537CD00D2CF34 /* AdsTableViewCell.swift */; };
 		D3E599992435F02B00D2CF34 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E599982435F02B00D2CF34 /* ProfileViewController.swift */; };
@@ -57,6 +61,10 @@
 		D3B01EC12439EE3B00F1772B /* BigImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		D3B01EC22439EE3B00F1772B /* BigImageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BigImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		D3B01EC5243A18A400F1772B /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
+		D3BC98E1244B48EC000433B2 /* ReviewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsViewController.swift; sourceTree = "<group>"; };
+		D3BC98E3244B4C20000433B2 /* ReviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTableViewCell.swift; sourceTree = "<group>"; };
+		D3BC98E5244B60F2000433B2 /* AddReviewTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReviewTableViewController.swift; sourceTree = "<group>"; };
+		D3BC98E9244BC7AD000433B2 /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		D3D86BC7243673EA00DBA3D0 /* AddAdsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAdsTableViewController.swift; sourceTree = "<group>"; };
 		D3E59996243537CD00D2CF34 /* AdsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsTableViewCell.swift; sourceTree = "<group>"; };
 		D3E599982435F02B00D2CF34 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +151,7 @@
 				D3E8879E24337611001FFA50 /* User.swift */,
 				D3440C982440E87300A58617 /* Ad.swift */,
 				D3440C9A2441422900A58617 /* AdImage.swift */,
+				D3BC98E9244BC7AD000433B2 /* Review.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -156,6 +165,8 @@
 				D3E599982435F02B00D2CF34 /* ProfileViewController.swift */,
 				D3D86BC7243673EA00DBA3D0 /* AddAdsTableViewController.swift */,
 				D3B01EBF2439EA3400F1772B /* AdTableViewController.swift */,
+				D3BC98E1244B48EC000433B2 /* ReviewsViewController.swift */,
+				D3BC98E5244B60F2000433B2 /* AddReviewTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -177,6 +188,7 @@
 				D30AECAA2438D6CA00DF6DAF /* ImageCollectionViewCell.swift */,
 				D3B01EC12439EE3B00F1772B /* BigImageCollectionViewCell.swift */,
 				D34207632442512D003421A6 /* AvatarTableViewCell.swift */,
+				D3BC98E3244B4C20000433B2 /* ReviewTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -309,12 +321,14 @@
 				D3554C202430E42D00444C6E /* Mates.xcdatamodeld in Sources */,
 				D3554C1A2430E42D00444C6E /* SignInViewController.swift in Sources */,
 				D3440C992440E87300A58617 /* Ad.swift in Sources */,
+				D3BC98E6244B60F2000433B2 /* AddReviewTableViewController.swift in Sources */,
 				D3B01EC02439EA3400F1772B /* AdTableViewController.swift in Sources */,
 				D3B01EC32439EE3B00F1772B /* BigImageCollectionViewCell.swift in Sources */,
 				D3E887932430E5AF001FFA50 /* NetworkManager.swift in Sources */,
 				D3D86BC8243673EA00DBA3D0 /* AddAdsTableViewController.swift in Sources */,
 				D3E59997243537CD00D2CF34 /* AdsTableViewCell.swift in Sources */,
 				D3E8879624314545001FFA50 /* UITextField+Extension.swift in Sources */,
+				D3BC98EA244BC7AD000433B2 /* Review.swift in Sources */,
 				D30AECAB2438D6CA00DF6DAF /* ImageCollectionViewCell.swift in Sources */,
 				D3E8879A2431E8D1001FFA50 /* SignUpTableViewController.swift in Sources */,
 				D3E599992435F02B00D2CF34 /* ProfileViewController.swift in Sources */,
@@ -324,8 +338,10 @@
 				D342076624425E69003421A6 /* UIView+Extension.swift in Sources */,
 				D3554C162430E42D00444C6E /* AppDelegate.swift in Sources */,
 				D3554C182430E42D00444C6E /* SceneDelegate.swift in Sources */,
+				D3BC98E2244B48EC000433B2 /* ReviewsViewController.swift in Sources */,
 				D3FFC9332434D0D4005D5243 /* AdsViewController.swift in Sources */,
 				D34207642442512D003421A6 /* AvatarTableViewCell.swift in Sources */,
+				D3BC98E4244B4C20000433B2 /* ReviewTableViewCell.swift in Sources */,
 				D3440C9B2441422900A58617 /* AdImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

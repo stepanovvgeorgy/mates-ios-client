@@ -124,10 +124,11 @@ class SignUpTableViewController: UITableViewController {
                        UserDefaults.standard.set(jsonData["user_id"].intValue, forKey: "user_id")
                     
                        let innerVC = self.storyboard?.instantiateViewController(withIdentifier: "InnerTabBarController")
-                       
+                       let signInVC = self.storyboard?.instantiateViewController(withIdentifier: "SignInVC")
+
                        innerVC?.modalPresentationStyle = .fullScreen
                        
-                       self.present(innerVC!, animated: true, completion: nil)
+                    self.present(innerVC!, animated: true)
                     
                 }) { (errors) in
                     let jsonErrors = JSON(errors)

@@ -55,11 +55,19 @@ class AdTableViewController: UITableViewController {
         imagesCollectionView.delegate = self
         imagesCollectionView.dataSource = self
         imagesCollectionView.register(UINib(nibName: "BigImageCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: imageCellID)
-        
         avatarImageView.layer.cornerRadius = 25
         avatarImageView.clipsToBounds = true
                 
-        setDataFromAd(ad: ad)
+    }
+    
+    func getAdByID(_ id: Int?) {
+        if let id = id {
+            NetworkManager.shared.getAdByID(id) { (ad) in
+                self.ad = ad
+                self.setDataFromAd(ad: ad)
+                self.imagesCollectionView.reloadData()
+            }
+        }
     }
     
     func setDataFromAd(ad: Ad?) {
@@ -169,6 +177,17 @@ class AdTableViewController: UITableViewController {
             
         }
     }
+    
+    @IBAction func actionShowReviews(_ sender: UIButton) {
+        
+        let reviewsVC = storyboard?.instantiateViewController(withIdentifier: "ReviewsVC") as! ReviewsViewController
+        
+        reviewsVC.toUserID = ad?.userID
+        
+        navigationController?.pushViewController(reviewsVC, animated: true)
+        
+    }
+    
 }
 
 extension AdTableViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
