@@ -49,9 +49,7 @@ class AddAdsTableViewController: UITableViewController {
     let timeToSubwayPickerView = UIPickerView()
     
     let toolbar = UIToolbar(frame:CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
-    
-    var adsVC: AdsViewController?
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -164,9 +162,7 @@ class AddAdsTableViewController: UITableViewController {
                                     
                                     let alert = UIAlertController(title: "Объявление опубликовано", message: nil, preferredStyle: .alert)
                                     let okButton = UIAlertAction(title: "Ок", style: .cancel) { (action) in
-                                        
-                                        self.adsVC?.getAds()
-                                        
+                                        NotificationCenter.default.post(name: Notification.Name(rawValue: "adsReloadVC"), object: nil)
                                         self.dismiss(animated: true, completion: nil)
                                     }
                                     

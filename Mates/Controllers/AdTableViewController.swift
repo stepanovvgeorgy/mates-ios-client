@@ -16,7 +16,6 @@ class AdTableViewController: UITableViewController {
     @IBOutlet weak var viewsCountLabel: UILabel!
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var ageLabel: UILabel!
     @IBOutlet weak var connectButton: UIButton!
     @IBOutlet weak var subwayLabel: UILabel!
     @IBOutlet weak var timeToSubwayLabel: UILabel!
@@ -91,7 +90,6 @@ class AdTableViewController: UITableViewController {
             }
         }
         
-        ageLabel.text = adObj.userBDate
         subwayLabel.text = adObj.subway
         
         if adObj.timeToSubway == "" {
@@ -99,7 +97,7 @@ class AdTableViewController: UITableViewController {
         }
         
         timeToSubwayLabel.text = adObj.timeToSubway
-        addressLabel.text = "\(adObj.street ?? ""), \(adObj.numberOfHouse ?? ""), \(adObj.housing ?? "")"
+        addressLabel.text = "\(adObj.street ?? "") \(adObj.numberOfHouse ?? "") \(adObj.housing ?? "")"
 
         switch adObj.genderMate {
         case 0:

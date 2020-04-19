@@ -15,6 +15,9 @@ class AdsTableViewCell: UITableViewCell {
     @IBOutlet weak var firstNameLabel: UILabel!
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var blurVisualEffectView: UIVisualEffectView!
+    @IBOutlet weak var typeView: UIView!
+    @IBOutlet weak var typeViewLabel: UILabel!
+    @IBOutlet weak var favoriteButton: UIButton!
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -23,5 +26,7 @@ class AdsTableViewCell: UITableViewCell {
         blurVisualEffectView.layer.cornerRadius = 12
         blurVisualEffectView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         blurVisualEffectView.clipsToBounds = true
+        typeView.layer.cornerRadius = 12
+        typeView.clipsToBounds = true
     }
 }

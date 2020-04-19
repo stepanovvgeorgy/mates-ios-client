@@ -311,7 +311,21 @@ class NetworkManager {
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    func getReviews(url: String, _ completion: @escaping (_ reviews: [Review]) -> ()) {
+        guard let url = URL(string: "\(serverUrl)/\(url)") else {return}
         
+        AF.request(url, method: .get, encoding: JSONEncoding.default, headers: headersWithToken).validate().responseJSON { (response) in
+            switch response.result {
+            case .success(let value):
+                if response.response?.statusCode == 200 {
+                    
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
     
 }

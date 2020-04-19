@@ -34,6 +34,16 @@ class AdsViewController: UIViewController {
         refreshControl.addTarget(self, action: #selector(refresh(_:)), for: UIControl.Event.valueChanged)
         tableView.addSubview(refreshControl)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadVC(_:)), name: NSNotification.Name(rawValue: "adsReloadVC"), object: nil)
+        
+        getAds()
+    }
+    
+    @objc func reloadVC(_ notification: Notification) {
+        activityIndicator.startAnimating()
+        pageNumber = 1
+        adsArray = Array<Ad>()
+        totalCount = ""
         getAds()
     }
         
@@ -54,13 +64,9 @@ class AdsViewController: UIViewController {
         }
     }
     
+    
     @IBAction func actionAdd(_ sender: Any) {
         let navigationControllerAddAds = storyboard?.instantiateViewController(withIdentifier: "AddAdsNavController") as! UINavigationController
-        
-        let addAdsVC = navigationControllerAddAds.viewControllers.first as! AddAdsTableViewController
-        
-        addAdsVC.adsVC = self
-        
         present(navigationControllerAddAds, animated: true, completion: nil)
     }
 }
@@ -99,9 +105,31 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
         
         cell.firstNameLabel.text = ad.userFirstName
                 
+        if ad.type == 0 {
+            cell.typeViewLabel.text = "Ищу соседа"
+            cell.typeView.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+        } else if ad.type == 1 {
+            cell.typeView.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+            cell.typeViewLabel.text = "Сдам квартиру"
+        }
+        
+        cell.favoriteButton.setImage(#imageLiteral(resourceName: "passion"), for: .normal)
+        
+        cell.favoriteButton.tag = indexPath.row
+        cell.favoriteButton.addTarget(self, action: #selector(actionAddFavorite(_:)), for: .touchUpInside)
+                
         return cell
     }
+    
+    @objc func actionAddFavorite(_ sender: UIButton) {
         
+        if sender.image(for: .normal) == UIImage(named: "passion") {
+            sender.setImage(#imageLiteral(resourceName: "passion-fill"), for: .normal)
+        } else {
+            sender.setImage(#imageLiteral(resourceName: "passion"), for: .normal)
+        }
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.deselectRow(at: indexPath, animated: true)

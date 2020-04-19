@@ -32,9 +32,7 @@ class AddReviewTableViewController: UITableViewController {
         pickerView.dataSource = self
         
         finishedTextField.inputView = pickerView
-        
-        print(toUserID)
-        
+                
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(tapGesture)
     }

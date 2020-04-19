@@ -162,9 +162,9 @@
 				D3554C192430E42D00444C6E /* SignInViewController.swift */,
 				D3E887992431E8D1001FFA50 /* SignUpTableViewController.swift */,
 				D3FFC9322434D0D4005D5243 /* AdsViewController.swift */,
-				D3E599982435F02B00D2CF34 /* ProfileViewController.swift */,
 				D3D86BC7243673EA00DBA3D0 /* AddAdsTableViewController.swift */,
 				D3B01EBF2439EA3400F1772B /* AdTableViewController.swift */,
+				D3E599982435F02B00D2CF34 /* ProfileViewController.swift */,
 				D3BC98E1244B48EC000433B2 /* ReviewsViewController.swift */,
 				D3BC98E5244B60F2000433B2 /* AddReviewTableViewController.swift */,
 			);
