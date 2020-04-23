@@ -13,4 +13,5 @@ struct Review {
     let text: String?
     let result: String?
     let authorID: Int?
+    let userID: Int?
 }

@@ -314,13 +314,42 @@ class NetworkManager {
     }
     
     func getReviews(url: String, _ completion: @escaping (_ reviews: [Review]) -> ()) {
-        guard let url = URL(string: "\(serverUrl)/\(url)") else {return}
+        guard let url = URL(string: "\(serverUrl)\(url)") else {return}
         
         AF.request(url, method: .get, encoding: JSONEncoding.default, headers: headersWithToken).validate().responseJSON { (response) in
             switch response.result {
-            case .success(let value):
+            case .success(let dataJson):
                 if response.response?.statusCode == 200 {
                     
+                    let data = JSON(dataJson)
+                    
+                    var reviewsArray = Array<Review>()
+                    
+                    data.array!.forEach { (item) in
+                        let review = Review(star: item["star"].intValue,
+                                            text: item["text"].stringValue,
+                                            result: item["result"].stringValue,
+                                            authorID: item["author_id"].intValue,
+                                            userID: item["UserId"].intValue)
+                        reviewsArray.append(review)
+                    }
+                    
+                    completion(reviewsArray)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func getUserFieldByID(_ id: Int, fieldName: String, _ completion: () -> ()) {
+        guard let url = URL(string: "\(serverUrl)/user/\(id)/\(fieldName)") else {return}
+
+        AF.request(url, method: .get, encoding: JSONEncoding.default, headers: headersWithToken).validate().responseJSON { (response) in
+            switch response.result {
+            case .success(let dataJson):
+                if response.response?.statusCode == 200 {
+                    print(dataJson)
                 }
             case .failure(let error):
                 print(error.localizedDescription)

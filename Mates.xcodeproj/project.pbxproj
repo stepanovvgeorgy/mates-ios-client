@@ -8,7 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		16D22B52A0BAA3D6962263C1 /* Pods_Mates.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A6D92B2DBF43C6837B8823 /* Pods_Mates.framework */; };
-		D30AECA92438AC6900DF6DAF /* StationsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30AECA82438AC6900DF6DAF /* StationsList.swift */; };
+		D300368A244DEC5E00AB8551 /* MateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3003689244DEC5E00AB8551 /* MateTableViewCell.swift */; };
+		D300368C244F1B5200AB8551 /* MatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D300368B244F1B5200AB8551 /* MatesViewController.swift */; };
+		D300368E244F1DDE00AB8551 /* AddMateTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D300368D244F1DDE00AB8551 /* AddMateTableViewController.swift */; };
+		D30AECA92438AC6900DF6DAF /* CityInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30AECA82438AC6900DF6DAF /* CityInfo.swift */; };
 		D30AECAB2438D6CA00DF6DAF /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30AECAA2438D6CA00DF6DAF /* ImageCollectionViewCell.swift */; };
 		D34207642442512D003421A6 /* AvatarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34207632442512D003421A6 /* AvatarTableViewCell.swift */; };
 		D342076624425E69003421A6 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D342076524425E69003421A6 /* UIView+Extension.swift */; };
@@ -28,6 +31,8 @@
 		D3BC98E4244B4C20000433B2 /* ReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC98E3244B4C20000433B2 /* ReviewTableViewCell.swift */; };
 		D3BC98E6244B60F2000433B2 /* AddReviewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC98E5244B60F2000433B2 /* AddReviewTableViewController.swift */; };
 		D3BC98EA244BC7AD000433B2 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC98E9244BC7AD000433B2 /* Review.swift */; };
+		D3C382B1244F531300786F39 /* Mate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C382B0244F531300786F39 /* Mate.swift */; };
+		D3C382B3244FB2CA00786F39 /* InnerTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C382B2244FB2CA00786F39 /* InnerTabBarController.swift */; };
 		D3D86BC8243673EA00DBA3D0 /* AddAdsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D86BC7243673EA00DBA3D0 /* AddAdsTableViewController.swift */; };
 		D3E59997243537CD00D2CF34 /* AdsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E59996243537CD00D2CF34 /* AdsTableViewCell.swift */; };
 		D3E599992435F02B00D2CF34 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E599982435F02B00D2CF34 /* ProfileViewController.swift */; };
@@ -42,7 +47,10 @@
 /* Begin PBXFileReference section */
 		01A6D92B2DBF43C6837B8823 /* Pods_Mates.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mates.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EFF147306E71468218D3E3C /* Pods-Mates.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mates.debug.xcconfig"; path = "Target Support Files/Pods-Mates/Pods-Mates.debug.xcconfig"; sourceTree = "<group>"; };
-		D30AECA82438AC6900DF6DAF /* StationsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationsList.swift; sourceTree = "<group>"; };
+		D3003689244DEC5E00AB8551 /* MateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MateTableViewCell.swift; sourceTree = "<group>"; };
+		D300368B244F1B5200AB8551 /* MatesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatesViewController.swift; sourceTree = "<group>"; };
+		D300368D244F1DDE00AB8551 /* AddMateTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMateTableViewController.swift; sourceTree = "<group>"; };
+		D30AECA82438AC6900DF6DAF /* CityInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityInfo.swift; sourceTree = "<group>"; };
 		D30AECAA2438D6CA00DF6DAF /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		D34207632442512D003421A6 /* AvatarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarTableViewCell.swift; sourceTree = "<group>"; };
 		D342076524425E69003421A6 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
@@ -65,6 +73,8 @@
 		D3BC98E3244B4C20000433B2 /* ReviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTableViewCell.swift; sourceTree = "<group>"; };
 		D3BC98E5244B60F2000433B2 /* AddReviewTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReviewTableViewController.swift; sourceTree = "<group>"; };
 		D3BC98E9244BC7AD000433B2 /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
+		D3C382B0244F531300786F39 /* Mate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mate.swift; sourceTree = "<group>"; };
+		D3C382B2244FB2CA00786F39 /* InnerTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InnerTabBarController.swift; sourceTree = "<group>"; };
 		D3D86BC7243673EA00DBA3D0 /* AddAdsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAdsTableViewController.swift; sourceTree = "<group>"; };
 		D3E59996243537CD00D2CF34 /* AdsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsTableViewCell.swift; sourceTree = "<group>"; };
 		D3E599982435F02B00D2CF34 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -128,11 +138,11 @@
 		D3554C142430E42D00444C6E /* Mates */ = {
 			isa = PBXGroup;
 			children = (
-				D30AECA82438AC6900DF6DAF /* StationsList.swift */,
-				D3E887A024337949001FFA50 /* Helper.swift */,
 				D3554C152430E42D00444C6E /* AppDelegate.swift */,
 				D3554C172430E42D00444C6E /* SceneDelegate.swift */,
 				D3E887922430E5AF001FFA50 /* NetworkManager.swift */,
+				D3E887A024337949001FFA50 /* Helper.swift */,
+				D30AECA82438AC6900DF6DAF /* CityInfo.swift */,
 				D3554C2E2430E4D700444C6E /* Views */,
 				D3554C2D2430E4D100444C6E /* Controllers */,
 				D3554C2C2430E4CB00444C6E /* Models */,
@@ -152,6 +162,7 @@
 				D3440C982440E87300A58617 /* Ad.swift */,
 				D3440C9A2441422900A58617 /* AdImage.swift */,
 				D3BC98E9244BC7AD000433B2 /* Review.swift */,
+				D3C382B0244F531300786F39 /* Mate.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -167,6 +178,9 @@
 				D3E599982435F02B00D2CF34 /* ProfileViewController.swift */,
 				D3BC98E1244B48EC000433B2 /* ReviewsViewController.swift */,
 				D3BC98E5244B60F2000433B2 /* AddReviewTableViewController.swift */,
+				D300368B244F1B5200AB8551 /* MatesViewController.swift */,
+				D300368D244F1DDE00AB8551 /* AddMateTableViewController.swift */,
+				D3C382B2244FB2CA00786F39 /* InnerTabBarController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -189,6 +203,7 @@
 				D3B01EC12439EE3B00F1772B /* BigImageCollectionViewCell.swift */,
 				D34207632442512D003421A6 /* AvatarTableViewCell.swift */,
 				D3BC98E3244B4C20000433B2 /* ReviewTableViewCell.swift */,
+				D3003689244DEC5E00AB8551 /* MateTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -320,19 +335,22 @@
 			files = (
 				D3554C202430E42D00444C6E /* Mates.xcdatamodeld in Sources */,
 				D3554C1A2430E42D00444C6E /* SignInViewController.swift in Sources */,
+				D3C382B1244F531300786F39 /* Mate.swift in Sources */,
 				D3440C992440E87300A58617 /* Ad.swift in Sources */,
 				D3BC98E6244B60F2000433B2 /* AddReviewTableViewController.swift in Sources */,
 				D3B01EC02439EA3400F1772B /* AdTableViewController.swift in Sources */,
 				D3B01EC32439EE3B00F1772B /* BigImageCollectionViewCell.swift in Sources */,
 				D3E887932430E5AF001FFA50 /* NetworkManager.swift in Sources */,
 				D3D86BC8243673EA00DBA3D0 /* AddAdsTableViewController.swift in Sources */,
+				D300368A244DEC5E00AB8551 /* MateTableViewCell.swift in Sources */,
 				D3E59997243537CD00D2CF34 /* AdsTableViewCell.swift in Sources */,
 				D3E8879624314545001FFA50 /* UITextField+Extension.swift in Sources */,
 				D3BC98EA244BC7AD000433B2 /* Review.swift in Sources */,
 				D30AECAB2438D6CA00DF6DAF /* ImageCollectionViewCell.swift in Sources */,
 				D3E8879A2431E8D1001FFA50 /* SignUpTableViewController.swift in Sources */,
 				D3E599992435F02B00D2CF34 /* ProfileViewController.swift in Sources */,
-				D30AECA92438AC6900DF6DAF /* StationsList.swift in Sources */,
+				D30AECA92438AC6900DF6DAF /* CityInfo.swift in Sources */,
+				D300368C244F1B5200AB8551 /* MatesViewController.swift in Sources */,
 				D3E887A124337949001FFA50 /* Helper.swift in Sources */,
 				D3E8879F24337611001FFA50 /* User.swift in Sources */,
 				D342076624425E69003421A6 /* UIView+Extension.swift in Sources */,
@@ -340,6 +358,8 @@
 				D3554C182430E42D00444C6E /* SceneDelegate.swift in Sources */,
 				D3BC98E2244B48EC000433B2 /* ReviewsViewController.swift in Sources */,
 				D3FFC9332434D0D4005D5243 /* AdsViewController.swift in Sources */,
+				D300368E244F1DDE00AB8551 /* AddMateTableViewController.swift in Sources */,
+				D3C382B3244FB2CA00786F39 /* InnerTabBarController.swift in Sources */,
 				D34207642442512D003421A6 /* AvatarTableViewCell.swift in Sources */,
 				D3BC98E4244B4C20000433B2 /* ReviewTableViewCell.swift in Sources */,
 				D3440C9B2441422900A58617 /* AdImage.swift in Sources */,
@@ -490,7 +510,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RTYZ3PY7TG;
 				INFOPLIST_FILE = Mates/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -510,7 +530,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RTYZ3PY7TG;
 				INFOPLIST_FILE = Mates/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -18,5 +18,6 @@ class ReviewTableViewCell: UITableViewCell {
     @IBOutlet weak var threeStarImageView: UIImageView!
     @IBOutlet weak var fourStarImageView: UIImageView!
     @IBOutlet weak var fiveStarImageView: UIImageView!
+    @IBOutlet weak var resultLabel: UILabel!
     
 }

@@ -39,7 +39,7 @@ class AdsViewController: UIViewController {
         getAds()
     }
     
-    @objc func reloadVC(_ notification: Notification) {
+    @objc func reloadVC(_ notification: Notification?) {
         activityIndicator.startAnimating()
         pageNumber = 1
         adsArray = Array<Ad>()
@@ -49,9 +49,11 @@ class AdsViewController: UIViewController {
         
     @objc func refresh(_ sender: AnyObject) {
         refreshControl.endRefreshing()
+        reloadVC(nil)
     }
     
     func getAds() {
+        activityIndicator.startAnimating()
         print("adsVC getAds pageNumber=\(pageNumber); limit=\(adsLimit)")
         NetworkManager.shared.getAds(url: "/ad/min?page=\(pageNumber)&limit=\(adsLimit)") { (ads, total) in
             self.adsArray.append(contentsOf: ads)
@@ -60,7 +62,6 @@ class AdsViewController: UIViewController {
             self.activityIndicator.stopAnimating()
             print("adsArray.count = \(self.adsArray.count)")
             print("!!!adsVC getAds clouser pageNumber=\(self.pageNumber); limit=\(self.adsLimit)")
-            
         }
     }
     

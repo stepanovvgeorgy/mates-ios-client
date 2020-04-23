@@ -50,10 +50,12 @@ class AddReviewTableViewController: UITableViewController {
             !reviewTextView.text.isEmpty {
             
             if let toUserID = toUserID {
-                let review = Review(star: selectedStarIndex, text: reviewTextView.text, result: finishedTextField.text, authorID: nil)
+                let review = Review(star: selectedStarIndex, text: reviewTextView.text, result: finishedTextField.text, authorID: nil, userID: nil)
                 
                 NetworkManager.shared.sendReview(toUserID: toUserID, review: review) {
-                    print("completion")
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: "reviewDidSend"), object: nil)
+                    
+                    self.dismiss(animated: true, completion: nil)
                 }
             }
             

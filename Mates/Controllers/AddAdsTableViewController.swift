@@ -222,7 +222,7 @@ extension AddAdsTableViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField.isEqual(subwayTextField) {
             if subwayTextField.text!.isEmpty {
-                subwayTextField.text = StationsList.all[0]
+                subwayTextField.text = CityInfo.subwayStations[0]
             }
         }
         if textField.isEqual(timeToSubwayTextField) {
@@ -295,7 +295,7 @@ extension AddAdsTableViewController: UIPickerViewDataSource, UIPickerViewDelegat
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         
         if pickerView.isEqual(subwayPickerView) {
-            return StationsList.all.count
+            return CityInfo.subwayStations.count
         }
         
         if pickerView.isEqual(timeToSubwayPickerView) {
@@ -310,7 +310,7 @@ extension AddAdsTableViewController: UIPickerViewDataSource, UIPickerViewDelegat
         
         if pickerView.isEqual(subwayPickerView) {
             
-            let station = StationsList.all[row]
+            let station = CityInfo.subwayStations[row]
             
             return station
             
@@ -327,7 +327,7 @@ extension AddAdsTableViewController: UIPickerViewDataSource, UIPickerViewDelegat
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView.isEqual(subwayPickerView) {
-            subwayTextField.text = StationsList.all[row]
+            subwayTextField.text = CityInfo.subwayStations[row]
         }
         if pickerView.isEqual(timeToSubwayPickerView) {
             timeToSubwayTextField.text = timeToSubwayList[row]
