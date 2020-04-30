@@ -56,7 +56,6 @@ class AdTableViewController: UITableViewController {
         imagesCollectionView.register(UINib(nibName: "BigImageCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: imageCellID)
         avatarImageView.layer.cornerRadius = 25
         avatarImageView.clipsToBounds = true
-                
     }
     
     func getAdByID(_ id: Int?) {
@@ -65,15 +64,36 @@ class AdTableViewController: UITableViewController {
                 self.ad = ad
                 self.setDataFromAd(ad: ad)
                 self.imagesCollectionView.reloadData()
+                
+                let currentUserID = UserDefaults.standard.value(forKey: "user_id") as! Int
+
+                if ad.userID == currentUserID {
+                    self.setEditBarButton()
+                }
+            }
+            NetworkManager.shared.sendViewed(adID: id) {
+                NetworkManager.shared.getViewed(adID: id) { (viewed) in
+                    self.viewsCountLabel.text = String(viewed)
+                }
             }
         }
+    }
+    
+    func setEditBarButton() {
+        let editBarButtonItem = UIBarButtonItem(title: "Редактировать", style: .plain, target: self, action: #selector(editAd(_:)))
+        navigationItem.setRightBarButton(editBarButtonItem, animated: true)
+    }
+    
+    @objc func editAd(_ sender: UIBarButtonItem) {
+        print("editAd")
     }
     
     func setDataFromAd(ad: Ad?) {
                 
         guard let adObj = ad else {return}
         
-        dateLabel.text = adObj.createdDate
+        dateLabel.text = Helper.shared.convertTimestamp(dateString: adObj.createdDate!)
+        
         nameLabel.text = "\(adObj.userFirstName ?? "") \(adObj.userLastName ?? "")"
         
         adImages = adObj.images!

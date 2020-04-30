@@ -20,4 +20,10 @@ class ReviewTableViewCell: UITableViewCell {
     @IBOutlet weak var fiveStarImageView: UIImageView!
     @IBOutlet weak var resultLabel: UILabel!
     
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        self.avatarImageView.layer.cornerRadius = 20
+        self.avatarImageView.clipsToBounds = true
+    }
+    
 }

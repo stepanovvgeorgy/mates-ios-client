@@ -130,5 +130,19 @@ class Helper {
 
         return newImage!
     }
+    
+    // https://stackoverflow.com/questions/32022906/how-can-i-convert-including-timezone-date-in-swift
+    func convertTimestamp(dateString: String) -> String? {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ru_RU")
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        if let date = formatter.date(from: dateString) {
+            formatter.dateFormat = "dd MMMM yyyy 'в' H:m"
+            let string = formatter.string(from: date)
+            return string
+        }
+        
+        return nil
+    }
 
 }

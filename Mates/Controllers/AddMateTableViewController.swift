@@ -11,17 +11,17 @@ import UIKit
 class AddMateTableViewController: UITableViewController {
 
     @IBOutlet weak var genderSegmentControl: UISegmentedControl!
-    @IBOutlet weak var districtTextField: UITextField!
+    @IBOutlet weak var subwayTextField: UITextField!
     @IBOutlet weak var infoTextView: UITextView!
     
-    var districtPickerView: UIPickerView = UIPickerView()
+    var subwayPickerView: UIPickerView = UIPickerView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        districtPickerView.delegate = self
-        districtPickerView.dataSource = self
+        subwayPickerView.delegate = self
+        subwayPickerView.dataSource = self
         infoTextView.backgroundColor = .white
-        districtTextField.inputView = districtPickerView
+        subwayTextField.inputView = subwayPickerView
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(tapGesture)
     }
@@ -36,21 +36,49 @@ class AddMateTableViewController: UITableViewController {
     
     @IBAction func actionSend(_ sender: UIBarButtonItem) {
         
-        if !districtTextField.text!.isEmpty
+        if !subwayTextField.text!.isEmpty
             && !infoTextView.text!.isEmpty {
-            print("send")
+
+            sendMate()
+            
         } else {
             let alert = Helper.shared.showInfoAlert(title: "Ошибка", message: "Заполните все поля")
             present(alert!, animated: true, completion: nil)
         }
         
     }
+    
+    func sendMate() {
+        let mate = Mate(gender: genderSegmentControl.selectedSegmentIndex,
+                        subway: subwayTextField.text!,
+                        infoText: infoTextView.text!,
+                        userFirstName: nil,
+                        userLastName: nil,
+                        userAvatarUrl: nil,
+                        userID: nil)
+        
+        NetworkManager.shared.sendMate(mate) {
+            
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "sendedMate"), object: nil)
+
+            let alert = UIAlertController(title: "", message: "Объявление успешно добавлено", preferredStyle: .alert)
+            
+            let okAction = UIAlertAction(title: "Ок", style: .cancel) { (action) in
+                self.dismiss(animated: true, completion: nil)
+            }
+            
+            alert.addAction(okAction)
+            
+            self.present(alert, animated: true)
+            
+        }
+    }
 }
 
 extension AddMateTableViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        if textField.isEqual(districtTextField) {
-            districtTextField.text = CityInfo.districts[0]
+        if textField.isEqual(subwayTextField) {
+            subwayTextField.text = CityInfo.subwayStations[0]
         }
     }
 }
@@ -66,15 +94,15 @@ extension AddMateTableViewController: UIPickerViewDelegate, UIPickerViewDataSour
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return CityInfo.districts.count
+        return CityInfo.subwayStations.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return CityInfo.districts[row]
+        return CityInfo.subwayStations[row]
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        districtTextField.text = CityInfo.districts[row]
+        subwayTextField.text = CityInfo.subwayStations[row]
     }
     
 }

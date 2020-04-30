@@ -27,7 +27,7 @@ class ReviewsViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
-        
+                
         var tableViewBottomInset: CGFloat = 50
         
         let currentUserID = UserDefaults.standard.value(forKey: "user_id") as! Int
@@ -92,7 +92,8 @@ extension ReviewsViewController: UITableViewDelegate, UITableViewDataSource {
         
         cell.resultLabel.text = review.result
         cell.reviewTextLabel.text = review.text
-        
+        cell.fullnameLabel.text = "\(review.authorFirstName!) \(review.authorLastName!)"
+    
         switch review.star {
         case 1:
             cell.oneStarImageView.image = #imageLiteral(resourceName: "star-gold")
@@ -126,6 +127,14 @@ extension ReviewsViewController: UITableViewDelegate, UITableViewDataSource {
             cell.fiveStarImageView.image = #imageLiteral(resourceName: "star-gold")
         default:
             break
+        }
+        
+        guard let avatarURL = URL(string: review.authorAvatarUrl!) else {return cell}
+        
+        cell.avatarImageView.sd_setImage(with: avatarURL, placeholderImage: #imageLiteral(resourceName: "user-circle")) { (image, error, cache, url) in
+            if error != nil {
+                print(error?.localizedDescription as Any)
+            }
         }
         
         return cell

@@ -12,6 +12,9 @@ struct Review {
     let star: Int?
     let text: String?
     let result: String?
-    let authorID: Int?
+    let toUserID: Int?
     let userID: Int?
+    let authorFirstName: String?
+    let authorLastName: String?
+    let authorAvatarUrl: String?
 }

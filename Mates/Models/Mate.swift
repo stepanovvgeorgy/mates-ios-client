@@ -10,8 +10,10 @@ import Foundation
 
 struct Mate {
     let gender: Int?
-    let district: String?
+    let subway: String?
+    let infoText: String?
     let userFirstName: String?
     let userLastName: String?
-    let userAvatarName: String?
+    let userAvatarUrl: String?
+    let userID: Int?
 }

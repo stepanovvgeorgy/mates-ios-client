@@ -49,6 +49,7 @@ class SignInViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
                                                name: UIApplication.keyboardWillHideNotification,
                                                object: nil)
+        
     }
     
     // MARK: - METHODS  -
@@ -123,6 +124,14 @@ class SignInViewController: UIViewController {
     @IBAction func actionSignUp(_ sender: UIButton) {
         let signUpVC = storyboard?.instantiateViewController(withIdentifier: "SignUpTableViewController")
         present(signUpVC!, animated: true, completion: nil)
+    }
+    
+    @IBAction func actionInfo(_ sender: UIButton) {
+        
+        let infoNavController = storyboard?.instantiateViewController(withIdentifier: "InfoNavController")
+        
+        present(infoNavController!, animated: true, completion: nil)
+        
     }
 }
 

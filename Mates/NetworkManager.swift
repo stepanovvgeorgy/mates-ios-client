@@ -150,7 +150,7 @@ class NetworkManager {
             }
             
             let token = UserDefaults.standard.value(forKey: "token") as! String
-
+            
             form.append((token as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: "token")
             
         }, to: "\(serverUrl)\(url)", method: .post).response { result in
@@ -177,7 +177,7 @@ class NetworkManager {
     }
     
     func getAds(url: String, _ completion: @escaping (_ ads: [Ad], _ total: String) -> ()) {
-
+        
         let url = URL(string: "\(serverUrl)\(url)")
         
         AF.request(url!, method: .get, headers: headersWithToken).validate().responseJSON { (response) in
@@ -185,7 +185,7 @@ class NetworkManager {
             case .success(let dataJson):
                 
                 let data = JSON(dataJson)
-                                
+                
                 let totalCount = response.response?.headers["total"]
                 
                 if !data.array!.isEmpty {
@@ -211,12 +211,12 @@ class NetworkManager {
                                     infoText: item["info_text"].stringValue,
                                     userID: item["UserId"].intValue,
                                     previewImage: "\(self.uploadsUrl)/\(item["Images"][0]["name"].stringValue)",
-                                    images: nil,
-                                    userFirstName: item["User"]["first_name"].stringValue,
-                                    userLastName: nil,
-                                    userAvatarString: "\(self.uploadsUrl)/\(item["User"]["avatar"].stringValue)",
-                                    userBDate: nil,
-                                    createdDate: nil)
+                            images: nil,
+                            userFirstName: item["User"]["first_name"].stringValue,
+                            userLastName: nil,
+                            userAvatarString: "\(self.uploadsUrl)/\(item["User"]["avatar"].stringValue)",
+                            userBDate: nil,
+                            createdDate: nil)
                         
                         
                         adsArray.append(ad)
@@ -252,7 +252,7 @@ class NetworkManager {
                     let imageUrlString = "\(self.uploadsUrl)/\(item["name"].stringValue)"
                     imagesUrls.append(imageUrlString)
                 })
-                                    
+                
                 let ad = Ad(id: item["id"].intValue,
                             type: item["type"].intValue,
                             subway: item["subway"].stringValue,
@@ -274,8 +274,8 @@ class NetworkManager {
                             userFirstName: item["User"]["first_name"].stringValue,
                             userLastName: item["User"]["last_name"].stringValue,
                             userAvatarString: "\(self.uploadsUrl)/\(item["User"]["avatar"].stringValue)",
-                            userBDate: item["User"]["b_date"].stringValue,
-                            createdDate: item["createdAt"].stringValue)
+                    userBDate: item["User"]["b_date"].stringValue,
+                    createdDate: item["createdAt"].stringValue)
                 
                 completion(ad)
                 
@@ -283,13 +283,13 @@ class NetworkManager {
                 print(error.localizedDescription)
             }
         }
-
+        
     }
     
     func sendReview(toUserID: Int, review: Review, completion: @escaping () -> ()) {
         
         guard let url = URL(string: "\(serverUrl)/review/add/\(toUserID)") else {return}
-                
+        
         let parameters: [String : Any] = [
             "text": review.text!,
             "star": review.star!,
@@ -301,15 +301,15 @@ class NetworkManager {
                    parameters: parameters,
                    encoding: JSONEncoding.default,
                    headers: headersWithToken).validate().responseJSON { (response) in
-            switch response.result {
-            case .success(let value):
-                if response.response?.statusCode == 201 {
-                    print(value)
-                    completion()
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
+                    switch response.result {
+                    case .success(let value):
+                        if response.response?.statusCode == 201 {
+                            print(value)
+                            completion()
+                        }
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
         }
     }
     
@@ -326,11 +326,15 @@ class NetworkManager {
                     var reviewsArray = Array<Review>()
                     
                     data.array!.forEach { (item) in
+                                                
                         let review = Review(star: item["star"].intValue,
-                                            text: item["text"].stringValue,
-                                            result: item["result"].stringValue,
-                                            authorID: item["author_id"].intValue,
-                                            userID: item["UserId"].intValue)
+                                                        text: item["text"].stringValue,
+                                                        result: item["result"].stringValue,
+                                                        toUserID: item["to_user_id"].intValue,
+                                                        userID: item["UserId"].intValue,
+                                                        authorFirstName: item["User"]["first_name"].stringValue,
+                                                        authorLastName: item["User"]["last_name"].stringValue,
+                                                        authorAvatarUrl: "\(self.uploadsUrl)/\(item["User"]["avatar"].stringValue)")
                         reviewsArray.append(review)
                     }
                     
@@ -342,14 +346,121 @@ class NetworkManager {
         }
     }
     
-    func getUserFieldByID(_ id: Int, fieldName: String, _ completion: () -> ()) {
+    func getUserMinByID(_ id: Int, _ completion: @escaping (_ data: JSON) -> ()) {
+        guard let url = URL(string: "\(serverUrl)/user/min/\(id)/") else {return}
+        
+        AF.request(url,
+                   method: .get,
+                   encoding: JSONEncoding.default,
+                   headers: headersWithToken).validate().responseJSON { (response) in
+            switch response.result {
+            case .success(let data):
+                if response.response?.statusCode == 200 {
+                    let jsonData = JSON(data)
+                    completion(jsonData)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func getUserFieldByID(_ id: Int, fieldName: String, _ completion: @escaping (_ data: JSON) -> ()) {
         guard let url = URL(string: "\(serverUrl)/user/\(id)/\(fieldName)") else {return}
-
+        
         AF.request(url, method: .get, encoding: JSONEncoding.default, headers: headersWithToken).validate().responseJSON { (response) in
             switch response.result {
-            case .success(let dataJson):
+            case .success(let data):
                 if response.response?.statusCode == 200 {
-                    print(dataJson)
+                    let jsonData = JSON(data)
+                    completion(jsonData)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+    }
+    
+    func sendMate(_ mate: Mate, _ completion: @escaping () -> ()) {
+        
+        guard let url = URL(string: "\(serverUrl)/mate/add") else {return}
+        
+        let data: [String: Any] = [
+            "gender": mate.gender as Any,
+            "subway": mate.subway as Any,
+            "info_text": mate.infoText as Any,
+        ]
+        
+        AF.request(url, method: .post, parameters: data, encoding: JSONEncoding.default, headers: headersWithToken).validate().response { (response) in
+            switch response.result {
+            case .success( _):
+                if response.response?.statusCode == 201 {
+                    completion()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func getMates(page: Int, limit: Int, _ completion: @escaping (_ data: [Mate], _ total: String) -> () ) {
+        
+        guard let url = URL(string: "\(serverUrl)/mate/all?page=\(page)&limit=\(limit)") else { return }
+        
+        AF.request(url, method: .get, encoding: JSONEncoding.default, headers: headersWithToken).validate().response { (response) in
+            switch response.result {
+            case .success(let data):
+                let jsonData = JSON(data as Any)
+                
+                let totalCount = response.response?.headers["total"]
+                
+                var matesArray = Array<Mate>()
+                
+                jsonData.array!.forEach { (item) in
+                    let mate = Mate(gender: item["gender"].intValue,
+                                    subway: item["subway"].stringValue,
+                                    infoText: item["info_text"].stringValue,
+                                    userFirstName: item["User"]["first_name"].stringValue,
+                                    userLastName: item["User"]["last_name"].stringValue,
+                                    userAvatarUrl: "\(self.uploadsUrl)/\(item["User"]["avatar"].stringValue)",
+                        userID: item["UserId"].intValue)
+                    matesArray.append(mate)
+                }
+                
+                completion(matesArray, totalCount ?? "0")
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func sendViewed(adID: Int, _ completion: @escaping () -> ()) {
+        
+        guard let url = URL(string: "\(serverUrl)/viewed/send/\(adID)") else {return}
+        
+        AF.request(url, method: .post, encoding: JSONEncoding.default, headers: headersWithToken).validate().responseJSON { (response) in
+            switch response.result {
+            case .success( _):
+                if response.response?.statusCode == 201 {
+                    completion()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func getViewed(adID: Int, _ completion: @escaping (_ count: Int) -> ()) {
+        guard let url = URL(string: "\(serverUrl)/viewed/\(adID)") else {return}
+        AF.request(url, method: .get, encoding: JSONEncoding.default, headers: headersWithToken).validate().responseJSON { (response) in
+            switch response.result {
+            case .success(let data):
+                if response.response?.statusCode == 200 {
+                    let jsonData = JSON(data)
+                    let count = jsonData["count"].intValue
+                    completion(count)
                 }
             case .failure(let error):
                 print(error.localizedDescription)

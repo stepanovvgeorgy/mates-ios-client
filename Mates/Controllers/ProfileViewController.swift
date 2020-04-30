@@ -9,6 +9,14 @@
 import UIKit
 import SDWebImage
 
+enum ProfileSections: Int, CaseIterable {
+    case avatar = 0
+    case info = 1
+    case contacts = 2
+    case links = 3
+    case actions = 4
+}
+
 class ProfileViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
@@ -34,7 +42,6 @@ class ProfileViewController: UIViewController {
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
         
-        
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 0.320400238, blue: 0.3293212056, alpha: 1)
         
         getUser()
@@ -50,7 +57,7 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    @IBAction func actionLogout(_ sender: UIBarButtonItem) {
+    func logout() {
         
         let alert = UIAlertController(title: "Выход", message: "Выйти из аккаунта?", preferredStyle: .alert)
         
@@ -86,21 +93,29 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
 
 extension ProfileViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return ProfileSections.allCases.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if section == 0 {
+        if section == ProfileSections.avatar.rawValue {
             return 0
         }
         
-        if section == 1 {
+        if section == ProfileSections.info.rawValue {
             return 4
         }
         
-        if section == 2 {
+        if section == ProfileSections.contacts.rawValue {
             return 2
+        }
+        
+        if section == ProfileSections.links.rawValue {
+            return 2
+        }
+        
+        if section == ProfileSections.actions.rawValue {
+            return 1
         }
         
         return 0
@@ -108,40 +123,64 @@ extension ProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "UserInfoCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UserInfoCell") as! UserInfoTableViewCell
         
-        if indexPath.section == 1 && indexPath.row == 0 {
+        cell.selectionStyle = .none
+        
+        let linkCell = tableView.dequeueReusableCell(withIdentifier: "LinkCell") as! LinkTableViewCell
+        
+        let actionCell = tableView.dequeueReusableCell(withIdentifier: "ActionCell") as! ActionTableViewCell
+        
+        if indexPath.section == ProfileSections.info.rawValue && indexPath.row == 0 {
             
-            cell.textLabel!.text = "Имя"
-            cell.detailTextLabel!.text = user?.first_name
+            cell.titleLabel!.text = "Имя"
+            cell.valueLabel!.text = user?.first_name
             
-        } else if indexPath.section == 1 && indexPath.row == 1 {
+        } else if indexPath.section == ProfileSections.info.rawValue && indexPath.row == 1 {
             
-            cell.textLabel!.text = "Фамилия"
-            cell.detailTextLabel!.text = user?.last_name
+            cell.titleLabel!.text = "Фамилия"
+            cell.valueLabel!.text = user?.last_name
             
-        } else if indexPath.section == 1 && indexPath.row == 2 {
-            cell.textLabel!.text = "Дата рождения"
-            cell.detailTextLabel!.text = user?.b_date
+        } else if indexPath.section == ProfileSections.info.rawValue && indexPath.row == 2 {
+            cell.titleLabel!.text = "Дата рождения"
+            cell.valueLabel!.text = user?.b_date
             
-        } else if indexPath.section == 1 && indexPath.row == 3 {
+        } else if indexPath.section == ProfileSections.info.rawValue && indexPath.row == 3 {
             
-            cell.textLabel!.text = "Пол"
+            cell.titleLabel!.text = "Пол"
             if user?.gender == 0 {
-                cell.detailTextLabel!.text = "Жен."
+                cell.valueLabel!.text = "Жен."
             } else {
-                cell.detailTextLabel!.text = "Муж."
+                cell.valueLabel!.text = "Муж."
             }
             
-        } else if indexPath.section == 2 && indexPath.row == 0 {
+        } else if indexPath.section == ProfileSections.contacts.rawValue && indexPath.row == 0 {
             
-            cell.textLabel!.text = "Email"
-            cell.detailTextLabel!.text = user?.email
+            cell.titleLabel!.text = "Email"
+            cell.valueLabel!.text = user?.email
             
-        } else if indexPath.section == 2 && indexPath.row == 1 {
+        } else if indexPath.section == ProfileSections.contacts.rawValue && indexPath.row == 1 {
             
-            cell.textLabel!.text = "Телефон"
-            cell.detailTextLabel!.text = user?.phone
+            cell.titleLabel!.text = "Телефон"
+            cell.valueLabel!.text = user?.phone
+            
+        } else if indexPath.section == ProfileSections.links.rawValue && indexPath.row == 0 {
+            
+            linkCell.nameLabel.text = "Мои объявления"
+
+            return linkCell
+            
+        } else if indexPath.section == ProfileSections.links.rawValue && indexPath.row == 1 {
+            
+            linkCell.nameLabel.text = "Мои быстрые объявления"
+
+            return linkCell
+            
+        } else if indexPath.section == ProfileSections.actions.rawValue && indexPath.row == 0 {
+            
+            actionCell.actionLabel.text = "Выход"
+            
+            return actionCell
             
         }
 
@@ -152,9 +191,34 @@ extension ProfileViewController: UITableViewDataSource {
 
 extension ProfileViewController: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        if indexPath.section == ProfileSections.links.rawValue && indexPath.row == 0 {
+            
+            let adsViewController = storyboard?.instantiateViewController(withIdentifier: "AdsViewController") as! AdsViewController
+            
+            navigationController?.pushViewController(adsViewController, animated: true)
+            
+        }
+        
+        if indexPath.section == ProfileSections.links.rawValue && indexPath.row == 1 {
+            
+            let matesViewController = storyboard?.instantiateViewController(withIdentifier: "MatesViewController") as! MatesViewController
+            
+            navigationController?.pushViewController(matesViewController, animated: true)
+            
+        }
+        
+        if indexPath.section == ProfileSections.actions.rawValue && indexPath.row == 0 {
+            logout()
+        }
+        
+    }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        if section == 0 {
+        if section == ProfileSections.avatar.rawValue {
             
             let view = tableView.dequeueReusableCell(withIdentifier: "AvatarCell") as! AvatarTableViewCell
                         
@@ -179,7 +243,6 @@ extension ProfileViewController: UITableViewDelegate {
 
             
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentImagePicker(_:)))
-            
             
             view.addGestureRecognizer(tapGesture)
             
@@ -211,26 +274,35 @@ extension ProfileViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 {
+        if section == ProfileSections.avatar.rawValue {
             return 100
         }
         return 20
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        if indexPath.section == ProfileSections.links.rawValue {
+            return 56
+        }
+        
+        if indexPath.section == ProfileSections.actions.rawValue {
+            return 46
+        }
+        
         return 70
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 && indexPath.row == 0 {
+        if indexPath.section == ProfileSections.avatar.rawValue && indexPath.row == 0 {
             cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 1 {
+        if section == ProfileSections.info.rawValue {
             return "Личная информация"
-        } else if section == 2 {
+        } else if section == ProfileSections.contacts.rawValue {
             return "Контактная информация"
         }
         return nil

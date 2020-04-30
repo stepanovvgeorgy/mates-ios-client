@@ -13,10 +13,15 @@
 		D300368E244F1DDE00AB8551 /* AddMateTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D300368D244F1DDE00AB8551 /* AddMateTableViewController.swift */; };
 		D30AECA92438AC6900DF6DAF /* CityInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30AECA82438AC6900DF6DAF /* CityInfo.swift */; };
 		D30AECAB2438D6CA00DF6DAF /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30AECAA2438D6CA00DF6DAF /* ImageCollectionViewCell.swift */; };
+		D30D1A9D24572F2A00636311 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30D1A9C24572F2A00636311 /* InfoViewController.swift */; };
+		D30D1A9F2457315E00636311 /* AppTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30D1A9E2457315E00636311 /* AppTableViewCell.swift */; };
+		D30D1AA12458621B00636311 /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30D1AA02458621B00636311 /* UserInfoTableViewCell.swift */; };
 		D34207642442512D003421A6 /* AvatarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34207632442512D003421A6 /* AvatarTableViewCell.swift */; };
 		D342076624425E69003421A6 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D342076524425E69003421A6 /* UIView+Extension.swift */; };
 		D3440C992440E87300A58617 /* Ad.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3440C982440E87300A58617 /* Ad.swift */; };
 		D3440C9B2441422900A58617 /* AdImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3440C9A2441422900A58617 /* AdImage.swift */; };
+		D34DCA3F245864ED0036513C /* LinkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34DCA3E245864ED0036513C /* LinkTableViewCell.swift */; };
+		D34DCA412458686E0036513C /* ActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34DCA402458686E0036513C /* ActionTableViewCell.swift */; };
 		D3554C162430E42D00444C6E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3554C152430E42D00444C6E /* AppDelegate.swift */; };
 		D3554C182430E42D00444C6E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3554C172430E42D00444C6E /* SceneDelegate.swift */; };
 		D3554C1A2430E42D00444C6E /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3554C192430E42D00444C6E /* SignInViewController.swift */; };
@@ -52,10 +57,15 @@
 		D300368D244F1DDE00AB8551 /* AddMateTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMateTableViewController.swift; sourceTree = "<group>"; };
 		D30AECA82438AC6900DF6DAF /* CityInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityInfo.swift; sourceTree = "<group>"; };
 		D30AECAA2438D6CA00DF6DAF /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		D30D1A9C24572F2A00636311 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		D30D1A9E2457315E00636311 /* AppTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTableViewCell.swift; sourceTree = "<group>"; };
+		D30D1AA02458621B00636311 /* UserInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoTableViewCell.swift; sourceTree = "<group>"; };
 		D34207632442512D003421A6 /* AvatarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarTableViewCell.swift; sourceTree = "<group>"; };
 		D342076524425E69003421A6 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		D3440C982440E87300A58617 /* Ad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ad.swift; sourceTree = "<group>"; };
 		D3440C9A2441422900A58617 /* AdImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdImage.swift; sourceTree = "<group>"; };
+		D34DCA3E245864ED0036513C /* LinkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkTableViewCell.swift; sourceTree = "<group>"; };
+		D34DCA402458686E0036513C /* ActionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionTableViewCell.swift; sourceTree = "<group>"; };
 		D3554C122430E42D00444C6E /* Mates.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mates.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3554C152430E42D00444C6E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3554C172430E42D00444C6E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -181,6 +191,7 @@
 				D300368B244F1B5200AB8551 /* MatesViewController.swift */,
 				D300368D244F1DDE00AB8551 /* AddMateTableViewController.swift */,
 				D3C382B2244FB2CA00786F39 /* InnerTabBarController.swift */,
+				D30D1A9C24572F2A00636311 /* InfoViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -204,6 +215,10 @@
 				D34207632442512D003421A6 /* AvatarTableViewCell.swift */,
 				D3BC98E3244B4C20000433B2 /* ReviewTableViewCell.swift */,
 				D3003689244DEC5E00AB8551 /* MateTableViewCell.swift */,
+				D30D1A9E2457315E00636311 /* AppTableViewCell.swift */,
+				D30D1AA02458621B00636311 /* UserInfoTableViewCell.swift */,
+				D34DCA3E245864ED0036513C /* LinkTableViewCell.swift */,
+				D34DCA402458686E0036513C /* ActionTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -338,8 +353,10 @@
 				D3C382B1244F531300786F39 /* Mate.swift in Sources */,
 				D3440C992440E87300A58617 /* Ad.swift in Sources */,
 				D3BC98E6244B60F2000433B2 /* AddReviewTableViewController.swift in Sources */,
+				D30D1A9D24572F2A00636311 /* InfoViewController.swift in Sources */,
 				D3B01EC02439EA3400F1772B /* AdTableViewController.swift in Sources */,
 				D3B01EC32439EE3B00F1772B /* BigImageCollectionViewCell.swift in Sources */,
+				D34DCA412458686E0036513C /* ActionTableViewCell.swift in Sources */,
 				D3E887932430E5AF001FFA50 /* NetworkManager.swift in Sources */,
 				D3D86BC8243673EA00DBA3D0 /* AddAdsTableViewController.swift in Sources */,
 				D300368A244DEC5E00AB8551 /* MateTableViewCell.swift in Sources */,
@@ -347,12 +364,15 @@
 				D3E8879624314545001FFA50 /* UITextField+Extension.swift in Sources */,
 				D3BC98EA244BC7AD000433B2 /* Review.swift in Sources */,
 				D30AECAB2438D6CA00DF6DAF /* ImageCollectionViewCell.swift in Sources */,
+				D30D1AA12458621B00636311 /* UserInfoTableViewCell.swift in Sources */,
 				D3E8879A2431E8D1001FFA50 /* SignUpTableViewController.swift in Sources */,
 				D3E599992435F02B00D2CF34 /* ProfileViewController.swift in Sources */,
 				D30AECA92438AC6900DF6DAF /* CityInfo.swift in Sources */,
+				D34DCA3F245864ED0036513C /* LinkTableViewCell.swift in Sources */,
 				D300368C244F1B5200AB8551 /* MatesViewController.swift in Sources */,
 				D3E887A124337949001FFA50 /* Helper.swift in Sources */,
 				D3E8879F24337611001FFA50 /* User.swift in Sources */,
+				D30D1A9F2457315E00636311 /* AppTableViewCell.swift in Sources */,
 				D342076624425E69003421A6 /* UIView+Extension.swift in Sources */,
 				D3554C162430E42D00444C6E /* AppDelegate.swift in Sources */,
 				D3554C182430E42D00444C6E /* SceneDelegate.swift in Sources */,
