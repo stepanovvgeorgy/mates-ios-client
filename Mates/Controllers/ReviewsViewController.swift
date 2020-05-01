@@ -13,7 +13,7 @@ class ReviewsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addReviewButton: UIButton!
     @IBOutlet weak var emptyLabel: UILabel!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    var activityIndicator = UIActivityIndicatorView.indicator
     
     var toUserID: Int?
     
@@ -46,6 +46,9 @@ class ReviewsViewController: UIViewController {
                                                name: Notification.Name("reviewDidSend"),
                                                object: nil)
         
+        view.addSubview(activityIndicator)
+        activityIndicator.centerInView(view)
+        
         getReviews()
     }
     
@@ -53,10 +56,14 @@ class ReviewsViewController: UIViewController {
         if let toUserID = toUserID {
             activityIndicator.startAnimating()
             NetworkManager.shared.getReviews(url: "/review/user/\(toUserID)?page=\(pageNumber)&limit=\(limit)") { (reviews) in
-                self.tableView.isHidden = false
-                self.emptyLabel.isHidden = true
-                self.reviewsArray.append(contentsOf: reviews)
-                self.tableView.reloadData()
+                if (reviews.isEmpty) {
+                    self.emptyLabel.isHidden = false
+                } else {
+                    self.tableView.isHidden = false
+                    self.emptyLabel.isHidden = true
+                    self.reviewsArray.append(contentsOf: reviews)
+                    self.tableView.reloadData()
+                }
                 self.activityIndicator.stopAnimating()
             }
         }

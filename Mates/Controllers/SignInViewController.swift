@@ -18,13 +18,15 @@ class SignInViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var bannerHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView.indicator
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        activityIndicator.stopAnimating()
+        view.addSubview(activityIndicator)
+        
+        activityIndicator.centerInView(view)
         
         signInButton.layer.cornerRadius = 22
         

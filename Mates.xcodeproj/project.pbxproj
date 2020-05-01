@@ -29,6 +29,10 @@
 		D3554C202430E42D00444C6E /* Mates.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D3554C1E2430E42D00444C6E /* Mates.xcdatamodeld */; };
 		D3554C222430E43100444C6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3554C212430E43100444C6E /* Assets.xcassets */; };
 		D3554C252430E43100444C6E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3554C232430E43100444C6E /* LaunchScreen.storyboard */; };
+		D35841B1245B60B2001A1059 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35841B0245B60B2001A1059 /* UserViewController.swift */; };
+		D35841B3245C490F001A1059 /* ButtonsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35841B2245C490F001A1059 /* ButtonsTableViewCell.swift */; };
+		D35841B5245C6813001A1059 /* UIActivityIndicatorView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35841B4245C6813001A1059 /* UIActivityIndicatorView+Extension.swift */; };
+		D35841B7245C86BC001A1059 /* AvatarWithNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35841B6245C86BC001A1059 /* AvatarWithNameTableViewCell.swift */; };
 		D3B01EC02439EA3400F1772B /* AdTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B01EBF2439EA3400F1772B /* AdTableViewController.swift */; };
 		D3B01EC32439EE3B00F1772B /* BigImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B01EC12439EE3B00F1772B /* BigImageCollectionViewCell.swift */; };
 		D3B01EC42439EE3B00F1772B /* BigImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3B01EC22439EE3B00F1772B /* BigImageCollectionViewCell.xib */; };
@@ -75,6 +79,10 @@
 		D3554C212430E43100444C6E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D3554C242430E43100444C6E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D3554C262430E43100444C6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D35841B0245B60B2001A1059 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
+		D35841B2245C490F001A1059 /* ButtonsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonsTableViewCell.swift; sourceTree = "<group>"; };
+		D35841B4245C6813001A1059 /* UIActivityIndicatorView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIActivityIndicatorView+Extension.swift"; sourceTree = "<group>"; };
+		D35841B6245C86BC001A1059 /* AvatarWithNameTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarWithNameTableViewCell.swift; sourceTree = "<group>"; };
 		D3B01EBF2439EA3400F1772B /* AdTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdTableViewController.swift; sourceTree = "<group>"; };
 		D3B01EC12439EE3B00F1772B /* BigImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		D3B01EC22439EE3B00F1772B /* BigImageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BigImageCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -192,6 +200,7 @@
 				D300368D244F1DDE00AB8551 /* AddMateTableViewController.swift */,
 				D3C382B2244FB2CA00786F39 /* InnerTabBarController.swift */,
 				D30D1A9C24572F2A00636311 /* InfoViewController.swift */,
+				D35841B0245B60B2001A1059 /* UserViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -219,6 +228,8 @@
 				D30D1AA02458621B00636311 /* UserInfoTableViewCell.swift */,
 				D34DCA3E245864ED0036513C /* LinkTableViewCell.swift */,
 				D34DCA402458686E0036513C /* ActionTableViewCell.swift */,
+				D35841B2245C490F001A1059 /* ButtonsTableViewCell.swift */,
+				D35841B6245C86BC001A1059 /* AvatarWithNameTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -228,6 +239,7 @@
 			children = (
 				D3E8879524314545001FFA50 /* UITextField+Extension.swift */,
 				D342076524425E69003421A6 /* UIView+Extension.swift */,
+				D35841B4245C6813001A1059 /* UIActivityIndicatorView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -349,6 +361,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3554C202430E42D00444C6E /* Mates.xcdatamodeld in Sources */,
+				D35841B1245B60B2001A1059 /* UserViewController.swift in Sources */,
+				D35841B5245C6813001A1059 /* UIActivityIndicatorView+Extension.swift in Sources */,
 				D3554C1A2430E42D00444C6E /* SignInViewController.swift in Sources */,
 				D3C382B1244F531300786F39 /* Mate.swift in Sources */,
 				D3440C992440E87300A58617 /* Ad.swift in Sources */,
@@ -369,9 +383,11 @@
 				D3E599992435F02B00D2CF34 /* ProfileViewController.swift in Sources */,
 				D30AECA92438AC6900DF6DAF /* CityInfo.swift in Sources */,
 				D34DCA3F245864ED0036513C /* LinkTableViewCell.swift in Sources */,
+				D35841B3245C490F001A1059 /* ButtonsTableViewCell.swift in Sources */,
 				D300368C244F1B5200AB8551 /* MatesViewController.swift in Sources */,
 				D3E887A124337949001FFA50 /* Helper.swift in Sources */,
 				D3E8879F24337611001FFA50 /* User.swift in Sources */,
+				D35841B7245C86BC001A1059 /* AvatarWithNameTableViewCell.swift in Sources */,
 				D30D1A9F2457315E00636311 /* AppTableViewCell.swift in Sources */,
 				D342076624425E69003421A6 /* UIView+Extension.swift in Sources */,
 				D3554C162430E42D00444C6E /* AppDelegate.swift in Sources */,

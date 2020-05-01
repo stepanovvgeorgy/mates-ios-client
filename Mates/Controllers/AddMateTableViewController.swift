@@ -59,7 +59,7 @@ class AddMateTableViewController: UITableViewController {
         
         NetworkManager.shared.sendMate(mate) {
             
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "sendedMate"), object: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "sentMate"), object: nil)
 
             let alert = UIAlertController(title: "", message: "Объявление успешно добавлено", preferredStyle: .alert)
             

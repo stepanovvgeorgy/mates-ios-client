@@ -1,19 +1,20 @@
 //
-//  LinkTableViewCell.swift
+//  ButtonsTableViewCell.swift
 //  Mates
 //
-//  Created by Georgy Stepanov on 28.04.2020.
+//  Created by Georgy Stepanov on 01.05.2020.
 //  Copyright © 2020 Georgy Stepanov. All rights reserved.
 //
 
 import UIKit
 
-class LinkTableViewCell: UITableViewCell {
+class ButtonsTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var iconImageView: UIImageView!
+    @IBOutlet weak var msgButton: UIButton!
+    @IBOutlet weak var callButton: UIButton!
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
+
 }

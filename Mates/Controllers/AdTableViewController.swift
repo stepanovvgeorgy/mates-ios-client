@@ -56,6 +56,18 @@ class AdTableViewController: UITableViewController {
         imagesCollectionView.register(UINib(nibName: "BigImageCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: imageCellID)
         avatarImageView.layer.cornerRadius = 25
         avatarImageView.clipsToBounds = true
+        avatarImageView.isUserInteractionEnabled = true
+        
+        let toUserProfileGesture = UITapGestureRecognizer(target: self, action: #selector(toUserProfile(_:)))
+        avatarImageView.addGestureRecognizer(toUserProfileGesture)
+    }
+    
+    @objc func toUserProfile(_ sender: Any?) {
+        
+        let userViewController = storyboard?.instantiateViewController(withIdentifier: "UserViewController") as! UserViewController
+        userViewController.userID = avatarImageView.tag
+        
+        navigationController?.pushViewController(userViewController, animated: true)
     }
     
     func getAdByID(_ id: Int?) {
@@ -64,6 +76,9 @@ class AdTableViewController: UITableViewController {
                 self.ad = ad
                 self.setDataFromAd(ad: ad)
                 self.imagesCollectionView.reloadData()
+                
+                self.avatarImageView.tag = ad.userID!
+                self.nameLabel.tag = ad.userID!
                 
                 let currentUserID = UserDefaults.standard.value(forKey: "user_id") as! Int
 

@@ -404,9 +404,9 @@ class NetworkManager {
         }
     }
     
-    func getMates(page: Int, limit: Int, _ completion: @escaping (_ data: [Mate], _ total: String) -> () ) {
+    func getMates(url: String, _ completion: @escaping (_ data: [Mate], _ total: String) -> () ) {
         
-        guard let url = URL(string: "\(serverUrl)/mate/all?page=\(page)&limit=\(limit)") else { return }
+        guard let url = URL(string: "\(serverUrl)\(url)") else { return }
         
         AF.request(url, method: .get, encoding: JSONEncoding.default, headers: headersWithToken).validate().response { (response) in
             switch response.result {

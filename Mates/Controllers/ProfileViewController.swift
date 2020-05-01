@@ -20,7 +20,7 @@ enum ProfileSections: Int, CaseIterable {
 class ProfileViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    var activityIndicator = UIActivityIndicatorView.indicator
     
     var imagePicker: UIImagePickerController = UIImagePickerController()
         
@@ -43,6 +43,10 @@ class ProfileViewController: UIViewController {
         imagePicker.allowsEditing = true
         
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 0.320400238, blue: 0.3293212056, alpha: 1)
+        
+        view.addSubview(activityIndicator)
+        
+        activityIndicator.centerInView(view)
         
         getUser()
     }
@@ -111,7 +115,7 @@ extension ProfileViewController: UITableViewDataSource {
         }
         
         if section == ProfileSections.links.rawValue {
-            return 2
+            return 3
         }
         
         if section == ProfileSections.actions.rawValue {
@@ -167,12 +171,21 @@ extension ProfileViewController: UITableViewDataSource {
         } else if indexPath.section == ProfileSections.links.rawValue && indexPath.row == 0 {
             
             linkCell.nameLabel.text = "Мои объявления"
+            linkCell.iconImageView.image = #imageLiteral(resourceName: "home")
 
             return linkCell
             
         } else if indexPath.section == ProfileSections.links.rawValue && indexPath.row == 1 {
             
             linkCell.nameLabel.text = "Мои быстрые объявления"
+            linkCell.iconImageView.image = #imageLiteral(resourceName: "loupe")
+
+            return linkCell
+            
+        } else if indexPath.section == ProfileSections.links.rawValue && indexPath.row == 2 {
+            
+            linkCell.nameLabel.text = "Избранные объявления"
+            linkCell.iconImageView.image = #imageLiteral(resourceName: "star-empty")
 
             return linkCell
             
@@ -197,7 +210,7 @@ extension ProfileViewController: UITableViewDelegate {
         if indexPath.section == ProfileSections.links.rawValue && indexPath.row == 0 {
             
             let adsViewController = storyboard?.instantiateViewController(withIdentifier: "AdsViewController") as! AdsViewController
-            
+                        
             navigationController?.pushViewController(adsViewController, animated: true)
             
         }
@@ -205,7 +218,7 @@ extension ProfileViewController: UITableViewDelegate {
         if indexPath.section == ProfileSections.links.rawValue && indexPath.row == 1 {
             
             let matesViewController = storyboard?.instantiateViewController(withIdentifier: "MatesViewController") as! MatesViewController
-            
+                        
             navigationController?.pushViewController(matesViewController, animated: true)
             
         }
@@ -277,7 +290,7 @@ extension ProfileViewController: UITableViewDelegate {
         if section == ProfileSections.avatar.rawValue {
             return 100
         }
-        return 20
+        return 30
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

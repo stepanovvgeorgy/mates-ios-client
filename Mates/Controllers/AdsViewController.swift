@@ -13,7 +13,8 @@ class AdsViewController: UIViewController {
 
     @IBOutlet weak var addBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    var activityIndicator = UIActivityIndicatorView.indicator
     
     var refreshControl = UIRefreshControl()
     
@@ -22,13 +23,19 @@ class AdsViewController: UIViewController {
     var pageNumber = 1
     let adsLimit = 5
     var totalCount: String?
-    
+        
+    var currentUserID: Int {
+        get {
+            return UserDefaults.standard.value(forKey: "user_id") as! Int
+        }
+    }
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
+
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 0.320400238, blue: 0.3293212056, alpha: 1)
         
         refreshControl.addTarget(self, action: #selector(refresh(_:)), for: UIControl.Event.valueChanged)
@@ -36,11 +43,16 @@ class AdsViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadVC(_:)), name: NSNotification.Name(rawValue: "adsReloadVC"), object: nil)
         
+        view.addSubview(activityIndicator)
+                
+        activityIndicator.centerInView(view)
+        
         getAds()
     }
     
     @objc func reloadVC(_ notification: Notification?) {
         activityIndicator.startAnimating()
+        tableView.setContentOffset(.zero, animated: false)
         pageNumber = 1
         adsArray = Array<Ad>()
         totalCount = ""
@@ -53,9 +65,14 @@ class AdsViewController: UIViewController {
     }
     
     func getAds() {
+        
         activityIndicator.startAnimating()
+        
         print("adsVC getAds pageNumber=\(pageNumber); limit=\(adsLimit)")
-        NetworkManager.shared.getAds(url: "/ad/min?page=\(pageNumber)&limit=\(adsLimit)") { (ads, total) in
+        
+        let url = "/ad/min?page=\(pageNumber)&limit=\(adsLimit)"
+        
+        NetworkManager.shared.getAds(url: url) { (ads, total) in
             self.adsArray.append(contentsOf: ads)
             self.totalCount = total
             self.tableView.reloadData()
@@ -118,7 +135,11 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
         
         cell.favoriteButton.tag = indexPath.row
         cell.favoriteButton.addTarget(self, action: #selector(actionAddFavorite(_:)), for: .touchUpInside)
-                
+        
+        if ad.userID == currentUserID {
+            cell.favoriteButton.isHidden = true
+        }
+        
         return cell
     }
     
@@ -137,10 +158,10 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
         
         let selectedAd = adsArray[indexPath.row]
         
-        let adVC = self.storyboard?.instantiateViewController(withIdentifier: "AdTableViewController") as! AdTableViewController
+        let adVC = storyboard?.instantiateViewController(withIdentifier: "AdTableViewController") as! AdTableViewController
         
         adVC.getAdByID(selectedAd.id)
-        
+                
         self.navigationController?.pushViewController(adVC, animated: true)
 
     }
